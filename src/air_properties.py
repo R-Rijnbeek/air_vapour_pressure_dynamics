@@ -1,4 +1,4 @@
-import sympy
+import math
 from decorators import argument_check
 
 @argument_check((float,int))
@@ -80,7 +80,7 @@ def dew_point_factor(temp: int | float, rh: int | float) -> float:
     """
     temp=float(temp)
     rh=float(rh)
-    return (sympy.log(rh/100.) + 17.67*temp/(243.5 + temp))
+    return (math.log(rh/100.) + 17.67*temp/(243.5 + temp))
 
 @argument_check((float,int),(float,int))
 def dew_point_temperature(temp: int | float, rh: int | float) -> float:
