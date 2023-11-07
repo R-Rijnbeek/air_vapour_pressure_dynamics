@@ -1,0 +1,10 @@
+name: env
+channels:
+  - conda-forge
+  - anaconda
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+    - sympy
+  
