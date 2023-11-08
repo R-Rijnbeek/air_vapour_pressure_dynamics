@@ -20,9 +20,11 @@ if not exist ".\.vscode\" mkdir .\.vscode
 
 ( 
     echo {
-    echo     "python.defaultInterpreterPath": ".\\env\\python.exe",
+    echo     "python.defaultInterpreterPath": ".\\env\\Scripts\\python.exe",
     echo }
 ) > .\.vscode\settings.json
 
-conda env create -f environment.yml --prefix env
+python -m venv env
+call .\env\Scripts\activate
+pip install air_vapour_pressure_dynamics
   
