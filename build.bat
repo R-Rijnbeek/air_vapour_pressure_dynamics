@@ -24,7 +24,5 @@ if not exist ".\.vscode\" mkdir .\.vscode
     echo }
 ) > .\.vscode\settings.json
 
-python -m venv env
-call .\env\Scripts\activate
-pip install air_vapour_pressure_dynamics
+conda env create -f environment.yml --prefix env
   
