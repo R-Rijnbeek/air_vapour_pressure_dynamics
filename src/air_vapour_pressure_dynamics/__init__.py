@@ -4,7 +4,7 @@ air_vapour_pressure_dynamics: Repository with the basic functions related with t
 """
 __author__  = "Robert Rijnbeek"
 __email__   = "robert270384@gmail.com"
-__version__ = "0.0.1"
+__version__ = "1.0.0"
 
 # ======== IMPORTS ===========
 
@@ -145,30 +145,4 @@ def dew_point_temperature(temp: int | float, rh: int | float) -> float:
 
 if __name__ == '__main__':
 
-    try:
-        temp = 45.
-        rh = 90.
-
-        vp = vapourpressure(temp)
-        ad = density_air(temp, rh)
-        ab_hu_kg =absolutehumidity_kg_air(temp, rh)
-        ab_hu_m3 = absolutehumidity_m3_air(temp, rh)
-        en_kg = entalpie_kg_air(temp, rh)
-        en_m3 = entalpie_m3_air(temp, rh)
-        mois_def_kg = moisuredeficit_kg_air(temp,rh)
-        mois_def_m3 = moisuredeficit_m3_air(temp, rh)
-        dewpoint = dew_point_factor(temp, rh)
-        dewpoint_temp = dew_point_temperature(temp, rh)
-        
-        print(f"vp => {vp}")
-        print(f"ad => {ad}")
-        print(f"ab_hu_kg => {ab_hu_kg}")
-        print(f"ab_hu_m3 => {ab_hu_m3}")
-        print(f"en_kg => {en_kg}")
-        print(f"en_m3 => {en_m3}")
-        print(f"mois_def_kg => {mois_def_kg}")
-        print(f"mois_def_m3 => {mois_def_m3}")
-        print(f"dewpoint => {dewpoint}")
-        print(f"dewpoint_temp => {dewpoint_temp}")
-    except Exception as exc:
-        print(exc)
+    pass
