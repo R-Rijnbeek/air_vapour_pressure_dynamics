@@ -4,16 +4,17 @@ air_vapour_pressure_dynamics: Repository with the basic functions related with t
 """
 __author__  = "Robert Rijnbeek"
 __email__   = "robert270384@gmail.com"
-__version__ = "1.0.0"
+__version__ = "1.0.2"
 
 # ======== IMPORTS ===========
 
 import math
+from basic_decorators import argument_check
 
 # ======== DECORATORS ========
 
-def argument_check(*types_args,**types_kwargs):
-    """
+"""def argument_check(*types_args,**types_kwargs):
+    ""
     INFORMATION: Standard decorator with arguments that is used to verify the agument (arg) or opttion arguments (kwargs) 
                  of linked function. If the decorator see an not valid argument or kwarg in the funcion. 
                  There will be generate an exception with the explanation with the argument that is not correct.
@@ -28,7 +29,7 @@ def argument_check(*types_args,**types_kwargs):
         - ERROR: EXECUTION OF THE LINKED FUNCTION
         - NO ERROR: A DEFINED EXCEPTION
 
-    """
+    ""
     def check_accepts(f):
         def function_wrapper(*args, **kwargs):
             assert len(args) is len(types_args), f"In function '{f.__name__}{args}' and option values: {kwargs}, lenght of argumnets {args} is not the same as types_args {types_args}"
@@ -48,7 +49,7 @@ def argument_check(*types_args,**types_kwargs):
         function_wrapper.__name__ = f.__name__
         return function_wrapper
     return check_accepts 
-
+"""
 
 # ======= BASE FUNCTIONS =====
 
