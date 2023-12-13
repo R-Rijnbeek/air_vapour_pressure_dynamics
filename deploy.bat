@@ -11,3 +11,5 @@ python -m twine upload dist/*
 call .\deploy_env\Scripts\deactivate
 
 rmdir /S deploy_env
+
+rmdir /S dist

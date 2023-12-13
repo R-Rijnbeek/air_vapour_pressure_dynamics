@@ -163,3 +163,4 @@ cython_debug/
 #Custom
 .vscode/
 deploy_env/
+condaenv*.txt
