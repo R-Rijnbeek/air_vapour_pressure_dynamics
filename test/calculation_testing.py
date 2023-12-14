@@ -32,7 +32,7 @@ def testValues(temp, rh):
     print(  f"""vp => {vp}\nad => {ad}\nab_hu_kg => {ab_hu_kg}\nab_hu_m3 => {ab_hu_m3}\nen_kg => {en_kg}\nen_m3 => {en_m3}\nmois_def_kg => {mois_def_kg}\nmois_def_m3 => {mois_def_m3}\ndewpoint => {dewpoint}\ndewpoint_temp => {dewpoint_temp}\n""")
     return True
 
-def testProcess(data_sets):
+def calculation_test_Process(data_sets):
     for (temp, rh) in data_sets:
         try:
             testValues(temp,rh)
@@ -52,4 +52,4 @@ if __name__ == '__main__':
                     ("25","90"),
                     (True, False)
                 ]
-    testProcess(data_sets)
+    calculation_test_Process(data_sets)

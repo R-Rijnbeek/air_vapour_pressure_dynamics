@@ -8,7 +8,7 @@ __version__ = "1.6.0"
 
 # ======== IMPORTS ===========
 
-from .utils import ( getFunctionBackName, 
+from .utils import (getFunctionBackName, 
                     argumentChecker_2var, 
                     argumentChecker_1var, 
                     setArgCheck,
