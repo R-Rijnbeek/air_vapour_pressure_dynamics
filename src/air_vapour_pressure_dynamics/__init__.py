@@ -4,17 +4,28 @@ air_vapour_pressure_dynamics: Repository with the basic functions related with t
 """
 __author__  = "Robert Rijnbeek"
 __email__   = "robert270384@gmail.com"
-__version__ = "1.6.0"
+__version__ = "1.6.1"
 
 # ======== IMPORTS ===========
 
-from .utils import (getFunctionBackName, 
-                    argumentChecker_2var, 
-                    argumentChecker_1var, 
-                    setArgCheck,
-                    setApplyU,
-                    UnitFloat
-                    )
+if __package__ is None or __package__ == '':
+    # uses current directory visibility
+    from utils import ( getFunctionBackName, 
+                        argumentChecker_2var, 
+                        argumentChecker_1var, 
+                        setArgCheck,
+                        setApplyU,
+                        UnitFloat
+                        )
+else:
+    # uses current package visibility
+    from .utils import (getFunctionBackName, 
+                        argumentChecker_2var, 
+                        argumentChecker_1var, 
+                        setArgCheck,
+                        setApplyU,
+                        UnitFloat
+                        )
 
 # ========== SETTERS =========
 
@@ -89,4 +100,4 @@ def dew_point_temperature(temp: int | float, rh: int | float) -> UnitFloat | flo
 
 if __name__ == '__main__':
 
-    pass
+   pass
