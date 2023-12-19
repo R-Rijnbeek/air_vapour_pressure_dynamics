@@ -21,6 +21,7 @@ def testProcess_1():
         print("TEST 1 SUCCESFUL")
         return True
     except Exception as exc:
+        print(exc)
         return False
     
 def testProcess_2():

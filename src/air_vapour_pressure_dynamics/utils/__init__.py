@@ -8,14 +8,23 @@ import math
 
 from basic_decorators import argument_check
 
-import numpy as np
-
-
-
 # ======= GLOBAL VARIABLES ====
 
 ARGUMENT_CHECK = True
 APPLY_UNITS = True
+NUMPY_DETECTED = False
+
+@argument_check(bool)
+def setNumpyDetected(bool:bool) -> None:
+    global NUMPY_DETECTED
+    NUMPY_DETECTED = bool
+
+try:
+    import numpy as np
+    setNumpyDetected(True)
+    print("Numpy library detected")
+except:
+    print("Numpy library not detected")
 
 # ======= FUNCTIONS ===========
 
@@ -38,25 +47,33 @@ class UnitFloat(float):
     def __init__(self, value, unit=None):
         self.unit = unit
 
-class UnitArray(np.ndarray):
-    @argument_check(object, np.ndarray, str)
-    def __new__(cls, value, unit=None):
-        return np.asarray(value).view(cls)
-    
-    @argument_check(object , np.ndarray, str)
-    def __init__(self, value, unit=None):
-        self.unit = unit
+
+if NUMPY_DETECTED:
+    class UnitArray(np.ndarray):
+        @argument_check(object, np.ndarray, str)
+        def __new__(cls, value, unit=None):
+            return np.asarray(value).view(cls)
+        
+        @argument_check(object , np.ndarray, str)
+        def __init__(self, value, unit=None):
+            self.unit = unit
 
 
 def inputChanger(arg):
     if isinstance(arg,int):
         return float(arg)
-    if isinstance(arg,np.ndarray):
+    if ( NUMPY_DETECTED and isinstance(arg,np.ndarray)):
         return arg.astype(np.float64)
     return arg
 
 def inputAdapter(*args):
     return tuple(inputChanger(arg) for arg in args)
+
+def LOG(value):
+    if NUMPY_DETECTED :
+        return np.log(value)
+    else:
+        return math.log(value)
 
 def _vapourpressure(temp: int | float) -> UnitFloat:
     return 10**(8.07131 - (1730.63/(233.426+temp)))*133.322
@@ -84,7 +101,7 @@ def _moisuredeficit_m3_air(temp: int | float, rh: int | float) -> UnitFloat:
     return (_moisuredeficit_kg_air(temp, rh)*_density_air(temp, rh))
 
 def _dew_point_factor(temp: int | float, rh: int | float) -> UnitFloat:
-    return (math.log(rh/100.) + 17.67*temp/(243.5 + temp))
+    return (LOG(rh/100.) + 17.67*temp/(243.5 + temp))
 
 def _dew_point_temperature(temp: int | float, rh: int | float) -> UnitFloat:
     return (243.5*_dew_point_factor(temp, rh))/(17.67 - _dew_point_factor(temp, rh))
@@ -115,15 +132,16 @@ def _getUnitsByName(functionName):
 def MakeUpOutput(value, functionName):
     if APPLY_UNITS :
         try:
-            return UnitFloat(value,_getUnitsByName(functionName))
+            return UnitFloat(value, _getUnitsByName(functionName))
         except:
-            return UnitArray(value,_getUnitsByName(functionName))
+            return UnitArray(value, _getUnitsByName(functionName))
     return value
 
 
 def argumentChecker_2var(TEMP, HR, function="density_air"):
     if ARGUMENT_CHECK :
-        @argument_check((int, float, np.ndarray),(int, float, np.ndarray))
+        formats = ((int, float, np.ndarray),(int, float, np.ndarray)) if NUMPY_DETECTED else ((int, float),(int, float))
+        @argument_check(*formats)
         def wrapper(temp, hr):
             return _getFunctionByName(function)(temp, hr)
     else:
@@ -134,7 +152,8 @@ def argumentChecker_2var(TEMP, HR, function="density_air"):
     
 def argumentChecker_1var(TEMP, function="density_air"):
     if ARGUMENT_CHECK :
-        @argument_check((int, float, np.ndarray))
+        formats = (int, float, np.ndarray) if NUMPY_DETECTED else (int, float)
+        @argument_check(formats)
         def wrapper(temp):
             return _getFunctionByName(function)(temp)
     else:

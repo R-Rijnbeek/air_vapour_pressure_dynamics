@@ -4,7 +4,7 @@ air_vapour_pressure_dynamics: Repository with the basic functions related with t
 """
 __author__  = "Robert Rijnbeek"
 __email__   = "robert270384@gmail.com"
-__version__ = "1.6.1"
+__version__ = "1.7.1"
 
 # ======== IMPORTS ===========
 
@@ -100,22 +100,6 @@ def dew_point_temperature(temp: int | float, rh: int | float) -> UnitFloat | flo
 
 if __name__ == '__main__':
 
-    import numpy as np
-
-    setArgCheck(True)
-    setApplyU(True)
-
-    a = [10,20,30]
-    b = np.array(a)
-    print(b)
-    c = vapourpressure(b)
-    print(c)
-    print(c.unit)
-
-    print(vapourpressure(5))
-
-    print(density_air(5,90))
-
-    print(dew_point_temperature(5,95.))
+    pass
 
 
