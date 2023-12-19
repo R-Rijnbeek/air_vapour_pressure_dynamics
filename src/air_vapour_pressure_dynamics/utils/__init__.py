@@ -69,6 +69,12 @@ def inputChanger(arg):
 def inputAdapter(*args):
     return tuple(inputChanger(arg) for arg in args)
 
+def LOG(value):
+    if NUMPY_DETECTED :
+        return np.log(value)
+    else:
+        return math.log(value)
+
 def _vapourpressure(temp: int | float) -> UnitFloat:
     return 10**(8.07131 - (1730.63/(233.426+temp)))*133.322
 
@@ -95,7 +101,7 @@ def _moisuredeficit_m3_air(temp: int | float, rh: int | float) -> UnitFloat:
     return (_moisuredeficit_kg_air(temp, rh)*_density_air(temp, rh))
 
 def _dew_point_factor(temp: int | float, rh: int | float) -> UnitFloat:
-    return (math.log(rh/100.) + 17.67*temp/(243.5 + temp))
+    return (LOG(rh/100.) + 17.67*temp/(243.5 + temp))
 
 def _dew_point_temperature(temp: int | float, rh: int | float) -> UnitFloat:
     return (243.5*_dew_point_factor(temp, rh))/(17.67 - _dew_point_factor(temp, rh))

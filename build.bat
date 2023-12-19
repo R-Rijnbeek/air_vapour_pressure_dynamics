@@ -24,5 +24,5 @@ if not exist ".\.vscode\" mkdir .\.vscode
     echo }
 ) > .\.vscode\settings.json
 
-conda env create -f environment.yml --prefix env
+conda env create -f environment_optional.yml --prefix env
   
