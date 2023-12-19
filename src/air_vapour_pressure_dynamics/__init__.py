@@ -100,4 +100,22 @@ def dew_point_temperature(temp: int | float, rh: int | float) -> UnitFloat | flo
 
 if __name__ == '__main__':
 
-   pass
+    import numpy as np
+
+    setArgCheck(False)
+    setApplyU(True)
+
+    a = [10.,20.,30.]
+    b = np.array(a)
+    print(type(b))
+    c = vapourpressure(b)
+    print(c)
+    print(c.unit)
+
+    print(vapourpressure(5))
+
+    print(density_air(5,90))
+
+    print(dew_point_temperature(5,95.))
+
+

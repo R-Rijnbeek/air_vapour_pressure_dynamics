@@ -8,6 +8,10 @@ import math
 
 from basic_decorators import argument_check
 
+import numpy as np
+
+
+
 # ======= GLOBAL VARIABLES ====
 
 ARGUMENT_CHECK = True
@@ -34,55 +38,48 @@ class UnitFloat(float):
     def __init__(self, value, unit=None):
         self.unit = unit
 
+class UnitArray(np.ndarray):
+    @argument_check(object, np.ndarray, str)
+    def __new__(cls, value, unit=None):
+        return np.asarray(value).view(cls)
+    
+    @argument_check(object , np.ndarray, str)
+    def __init__(self, value, unit=None):
+        self.unit = unit
+
+
+def inputAdapter(*args):
+    return tuple(float(arg) if isinstance(arg,int) else arg for arg in args)
 
 def _vapourpressure(temp: int | float) -> UnitFloat:
-    temp=float(temp)
     return 10**(8.07131 - (1730.63/(233.426+temp)))*133.322
 
 def _density_air(temp: int | float, rh: int | float) -> UnitFloat:
-    temp=float(temp)
-    rh=float(rh)
     return 219.56*(1 +_absolutehumidity_kg_air(temp, rh)/1000)/((0.622 + _absolutehumidity_kg_air(temp, rh)/1000)*(temp + 273))
 
 def _absolutehumidity_kg_air(temp: int | float,rh: int | float) -> UnitFloat:
-    temp=float(temp)
-    rh=float(rh)
     waterdd = _vapourpressure(temp)
     return (0.622*waterdd*(rh/100)/(101325. - waterdd*(rh/100))*1000)
 
 def _absolutehumidity_m3_air(temp: int | float, rh: int | float) -> UnitFloat:
-    temp=float(temp)
-    rh=float(rh)
     return (_absolutehumidity_kg_air(temp, rh)*_density_air(temp, rh))
     
 def _entalpie_kg_air(temp: int | float, rh: int | float) -> UnitFloat:
-    temp=float(temp)
-    rh=float(rh)
     return ((1.005*temp) + _absolutehumidity_kg_air(temp, rh)*(2500.6 + (1.85*temp))/1000)
 
 def _entalpie_m3_air(temp: int | float, rh: int | float) -> UnitFloat:
-    temp=float(temp)
-    rh=float(rh)
     return (_entalpie_kg_air(temp, rh)*_density_air(temp, rh))
     
 def _moisuredeficit_kg_air(temp: int | float,rh: int | float) -> UnitFloat:
-    temp=float(temp)
-    rh=float(rh)
     return (_absolutehumidity_kg_air(temp, 100.)-_absolutehumidity_kg_air(temp, rh))
 
 def _moisuredeficit_m3_air(temp: int | float, rh: int | float) -> UnitFloat:
-    temp=float(temp)
-    rh=float(rh)
     return (_moisuredeficit_kg_air(temp, rh)*_density_air(temp, rh))
 
 def _dew_point_factor(temp: int | float, rh: int | float) -> UnitFloat:
-    temp=float(temp)
-    rh=float(rh)
     return (math.log(rh/100.) + 17.67*temp/(243.5 + temp))
 
 def _dew_point_temperature(temp: int | float, rh: int | float) -> UnitFloat:
-    temp=float(temp)
-    rh=float(rh)
     return (243.5*_dew_point_factor(temp, rh))/(17.67 - _dew_point_factor(temp, rh))
 
 
@@ -108,10 +105,13 @@ def _getFunctionByName(functionName):
 def _getUnitsByName(functionName):
     return functionList[functionName]["unit"]
 
-def MakeUpOutput(float, functionName):
+def MakeUpOutput(value, functionName):
     if APPLY_UNITS :
-       return UnitFloat(float,_getUnitsByName(functionName))
-    return float
+        try:
+            return UnitFloat(value,_getUnitsByName(functionName))
+        except:
+            return UnitArray(value,_getUnitsByName(functionName))
+    return value
 
 
 def argumentChecker_2var(TEMP, HR, function="density_air"):
@@ -122,6 +122,7 @@ def argumentChecker_2var(TEMP, HR, function="density_air"):
     else:
         def wrapper(temp, hr):
             return _getFunctionByName(function)(temp, hr)
+    (TEMP, HR,) = inputAdapter(TEMP, HR)
     return MakeUpOutput(wrapper(TEMP, HR),function)
     
 def argumentChecker_1var(TEMP, function="density_air"):
@@ -132,4 +133,5 @@ def argumentChecker_1var(TEMP, function="density_air"):
     else:
         def wrapper(temp):
             return _getFunctionByName(function)(temp)
+    (TEMP,) = inputAdapter(TEMP)
     return MakeUpOutput(wrapper(TEMP),function)
