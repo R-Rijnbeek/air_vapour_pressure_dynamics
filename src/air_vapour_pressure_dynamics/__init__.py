@@ -102,12 +102,12 @@ if __name__ == '__main__':
 
     import numpy as np
 
-    setArgCheck(False)
+    setArgCheck(True)
     setApplyU(True)
 
-    a = [10.,20.,30.]
+    a = [10,20,30]
     b = np.array(a)
-    print(type(b))
+    print(b)
     c = vapourpressure(b)
     print(c)
     print(c.unit)

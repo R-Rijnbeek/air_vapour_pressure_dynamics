@@ -48,8 +48,15 @@ class UnitArray(np.ndarray):
         self.unit = unit
 
 
+def inputChanger(arg):
+    if isinstance(arg,int):
+        return float(arg)
+    if isinstance(arg,np.ndarray):
+        return arg.astype(np.float64)
+    return arg
+
 def inputAdapter(*args):
-    return tuple(float(arg) if isinstance(arg,int) else arg for arg in args)
+    return tuple(inputChanger(arg) for arg in args)
 
 def _vapourpressure(temp: int | float) -> UnitFloat:
     return 10**(8.07131 - (1730.63/(233.426+temp)))*133.322
@@ -116,7 +123,7 @@ def MakeUpOutput(value, functionName):
 
 def argumentChecker_2var(TEMP, HR, function="density_air"):
     if ARGUMENT_CHECK :
-        @argument_check((int,float),(int,float))
+        @argument_check((int, float, np.ndarray),(int, float, np.ndarray))
         def wrapper(temp, hr):
             return _getFunctionByName(function)(temp, hr)
     else:
@@ -127,7 +134,7 @@ def argumentChecker_2var(TEMP, HR, function="density_air"):
     
 def argumentChecker_1var(TEMP, function="density_air"):
     if ARGUMENT_CHECK :
-        @argument_check((int,float))
+        @argument_check((int, float, np.ndarray))
         def wrapper(temp):
             return _getFunctionByName(function)(temp)
     else:
