@@ -4,7 +4,7 @@ air_vapour_pressure_dynamics: Repository with the basic functions related with t
 """
 __author__  = "Robert Rijnbeek"
 __email__   = "robert270384@gmail.com"
-__version__ = "1.7.1"
+__version__ = "1.7.2"
 
 # ======== IMPORTS ===========
 
