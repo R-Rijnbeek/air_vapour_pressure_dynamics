@@ -2,11 +2,14 @@
 
 # ====== IMPORTS ===============
 
-from air_vapour_pressure_dynamics import (  density_air, 
+# import sys
+# sys.path.append('.')
+# from src.air_vapour_pressure_dynamics import (  
+from air_vapour_pressure_dynamics import ( 
+                                            density_air, 
                                             setArgumentCheck,
                                             setApplyUnits
                                             )
-
 
 # ====== FUNCTION DEFINITION ====
 
@@ -17,12 +20,12 @@ def testProcess_1():
         setArgumentCheck(False)
         setApplyUnits(False)
         dens = density_air(temp, rh)
-        print(dens)
-        print("TEST 1 SUCCESFUL")
-        return True
+        print(f"It is not suppose to do the calculation {dens}")
+        return False
     except Exception as exc:
         print(exc)
-        return False
+        print("TEST 1 SUCCESFUL")
+        return True
     
 def testProcess_2():
     try:
@@ -92,7 +95,7 @@ def testProcess_7():
         print("TEST 7 SUCCESFULL")
         return True
     
-def settings_test_procesS():
+def settings_test_process():
     try:
         t1 = testProcess_1()
         t2 = testProcess_2()
@@ -113,4 +116,4 @@ def settings_test_procesS():
     
 if __name__ == '__main__':
 
-    settings_test_procesS()
+    settings_test_process()
