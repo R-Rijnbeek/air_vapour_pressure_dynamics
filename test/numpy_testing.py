@@ -1,18 +1,40 @@
 # -*- coding: utf-8 -*-
 
-from air_vapour_pressure_dynamics import (vapourpressure, 
-                                          density_air, 
-                                          absolutehumidity_kg_air, 
-                                          absolutehumidity_m3_air, 
-                                          entalpie_kg_air, 
-                                          entalpie_m3_air, 
-                                          moisuredeficit_kg_air, 
-                                          moisuredeficit_m3_air, 
-                                          dew_point_factor, 
-                                          dew_point_temperature
-                                          )
+# ====== IMPORTS ===============
 
-def numpy_test_Process(temp, rh):
+# import sys
+# sys.path.append('.')
+# from src.air_vapour_pressure_dynamics import (  
+from air_vapour_pressure_dynamics import (
+                                            vapourpressure, 
+                                            density_air, 
+                                            absolutehumidity_kg_air, 
+                                            absolutehumidity_m3_air, 
+                                            entalpie_kg_air, 
+                                            entalpie_m3_air, 
+                                            moisuredeficit_kg_air, 
+                                            moisuredeficit_m3_air, 
+                                            dew_point_factor, 
+                                            dew_point_temperature
+                                            )
+
+# ====== FUNCTION DEFINITION ====
+
+def importNumpy():
+    try:
+        import numpy as np
+        return True
+    except Exception as exc:
+        print(f"Numpy is not installed in the Python Environment. The test is useless without the installation of 'numpy': {exc}")
+        return False
+    
+def CreateTestData():
+    import numpy as np
+    temp = np.random.uniform(low=0., high=50., size=(50,))
+    rh = np.random.uniform(low=0., high=100., size=(50,))
+    return temp, rh
+
+def numpyCalculations(temp, rh):
     vp = vapourpressure(temp)
     ad = density_air(temp, rh)
     ab_hu_kg = absolutehumidity_kg_air(temp, rh)
@@ -26,20 +48,21 @@ def numpy_test_Process(temp, rh):
     print(  f"""vp => {vp}\nad => {ad}\nab_hu_kg => {ab_hu_kg}\nab_hu_m3 => {ab_hu_m3}\nen_kg => {en_kg}\nen_m3 => {en_m3}\nmois_def_kg => {mois_def_kg}\nmois_def_m3 => {mois_def_m3}\ndewpoint => {dewpoint}\ndewpoint_temp => {dewpoint_temp}\n""")
     return True
 
-
-
-
-
+def numpy_test_Process():
+    try:
+        if importNumpy():
+            temp, rh = CreateTestData()
+            if numpyCalculations(temp, rh):
+                print("Numpy test Process pass successfully!!" )
+                return True
+            else:
+                print("WARNING: Numpy test process does not pass")
+        else:
+            return False
+    except Exception as exc:
+        print(f"ERROR: unespected Error: {exc}")
+        return False
 
 if __name__ == '__main__':
 
-    try:
-        import numpy as np
-        temp = np.random.uniform(low=0., high=50., size=(50,))
-        rh = np.random.uniform(low=0., high=100., size=(50,))
-
-        numpy_test_Process(temp,rh)
-
-
-    except Exception as exc:
-        print(f"{exc}")
+    numpy_test_Process()
