@@ -4,7 +4,7 @@ air_vapour_pressure_dynamics: Repository with the basic functions related with t
 """
 __author__  = "Robert Rijnbeek"
 __email__   = "robert270384@gmail.com"
-__version__ = "1.7.3"
+__version__ = "1.8.0"
 
 # ======== IMPORTS ===========
 
@@ -100,24 +100,4 @@ def dew_point_temperature(temp: int | float, rh: int | float) -> UnitFloat | flo
 
 if __name__ == '__main__':
     
-    from sympy import Symbol,Expr
-
-    setArgCheck(True)
-    setApplyUnits(True)
-
-    x = Symbol("x")
-    y = Symbol("y")
-
-    print(isinstance(0.1 * x ,Expr))
-    
-    c = dew_point_factor(x,y)
-
-    d = vapourpressure(x)
-
-    print(c)
-
-    print(d.unit)
-
-    print(d.subs(x,2))
-
-
+    pass
