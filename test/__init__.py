@@ -1,6 +1,7 @@
 from numpy_testing import numpy_test_Process
 from settings_testing import settings_test_process
 from calculation_testing import calculation_test_Process
+from sympy_testing import sympy_test_Process
 
 
 def global_test_Process():
@@ -8,7 +9,8 @@ def global_test_Process():
         test1 = calculation_test_Process()
         test2 = settings_test_process()
         test3 = numpy_test_Process()
-        if test1 and test2 and test3 :
+        test4 = sympy_test_Process()
+        if test1 and test2 and test3 and test4 :
             print("INFO: Global Test Process does pass succesfully!!")
             return True
         else:
