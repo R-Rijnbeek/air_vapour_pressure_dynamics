@@ -13,18 +13,43 @@ from basic_decorators import argument_check
 ARGUMENT_CHECK = True
 APPLY_UNITS = True
 NUMPY_DETECTED = False
+SYMPY_DETECTED = False
 
 @argument_check(bool)
 def setNumpyDetected(bool:bool) -> None:
     global NUMPY_DETECTED
     NUMPY_DETECTED = bool
 
-try:
-    import numpy as np
-    setNumpyDetected(True)
-    print("Numpy library detected")
-except:
-    print("Numpy library not detected")
+@argument_check(bool)
+def setSympyDetected(bool:bool) -> None:
+    global SYMPY_DETECTED
+    SYMPY_DETECTED = bool
+
+
+def numpyCheck():
+    try:
+        global np
+        import numpy as np
+        setNumpyDetected(True)
+        print("Numpy library detected")
+    except:
+        print("Numpy library not detected")
+
+def sympyCheck():
+    try:
+        global sp
+        import sympy as sp
+        setSympyDetected(True)
+        print("Sympy library detected")
+    except:
+        print("Sympy library not detected")
+
+def LibraryCheck():
+    numpyCheck()
+    sympyCheck()
+
+LibraryCheck()
+
 
 # ======= FUNCTIONS ===========
 
@@ -46,7 +71,6 @@ class UnitFloat(float):
     @argument_check(object ,float, str)
     def __init__(self, value, unit=None):
         self.unit = unit
-
 
 if NUMPY_DETECTED:
     class UnitArray(np.ndarray):
@@ -70,10 +94,11 @@ def inputAdapter(*args):
     return tuple(inputChanger(arg) for arg in args)
 
 def LOG(value):
-    if NUMPY_DETECTED :
+    if NUMPY_DETECTED and isinstance(value, np.ndarray):
         return np.log(value)
-    else:
-        return math.log(value)
+    if SYMPY_DETECTED and isinstance(value, sp.Expr):
+        return sp.log(value)
+    return math.log(value)
 
 def _vapourpressure(temp: int | float) -> UnitFloat:
     return 10**(8.07131 - (1730.63/(233.426+temp)))*133.322

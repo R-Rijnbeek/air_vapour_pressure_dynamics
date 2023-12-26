@@ -99,7 +99,19 @@ def dew_point_temperature(temp: int | float, rh: int | float) -> UnitFloat | flo
 
 
 if __name__ == '__main__':
+    
+    from sympy import Symbol,Expr
 
-    pass
+    setArgCheck(True)
+    setApplyUnits(False)
+
+    x = Symbol("x")
+    y = Symbol("y")
+
+    print(isinstance(0.1 * x ,Expr))
+    
+    c = dew_point_factor(x,y)
+
+    print(c)
 
 
