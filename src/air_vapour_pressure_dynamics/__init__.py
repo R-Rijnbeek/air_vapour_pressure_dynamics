@@ -103,7 +103,7 @@ if __name__ == '__main__':
     from sympy import Symbol,Expr
 
     setArgCheck(True)
-    setApplyUnits(False)
+    setApplyUnits(True)
 
     x = Symbol("x")
     y = Symbol("y")
@@ -112,6 +112,12 @@ if __name__ == '__main__':
     
     c = dew_point_factor(x,y)
 
+    d = vapourpressure(x)
+
     print(c)
+
+    print(d.unit)
+
+    print(d.subs(x,2))
 
 

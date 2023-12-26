@@ -72,7 +72,7 @@ class UnitFloat(float):
     def __init__(self, value, unit=None):
         self.unit = unit
 
-if NUMPY_DETECTED:
+if NUMPY_DETECTED :
     class UnitArray(np.ndarray):
         @argument_check(object, np.ndarray, str)
         def __new__(cls, value, unit=None):
@@ -81,6 +81,17 @@ if NUMPY_DETECTED:
         @argument_check(object , np.ndarray, str)
         def __init__(self, value, unit=None):
             self.unit = unit
+
+
+if SYMPY_DETECTED :
+    class UnitExpression(sp.UnevaluatedExpr):
+        def __new__(self, value, unit=None):
+            return sp.UnevaluatedExpr.__new__(self, value)
+        
+        def __init__(self, value, unit=None):
+            self.unit = unit
+            super()
+
 
 
 def inputChanger(arg):
@@ -156,16 +167,23 @@ def _getUnitsByName(functionName):
 
 def MakeUpOutput(value, functionName):
     if APPLY_UNITS :
-        try:
+        if isinstance(value, float) :
             return UnitFloat(value, _getUnitsByName(functionName))
-        except:
+        if NUMPY_DETECTED and isinstance(value, np.ndarray):
             return UnitArray(value, _getUnitsByName(functionName))
+        if SYMPY_DETECTED and isinstance(value, sp.Expr):
+            return UnitExpression(value, _getUnitsByName(functionName))
     return value
 
 
 def argumentChecker_2var(TEMP, HR, function="density_air"):
     if ARGUMENT_CHECK :
-        formats = ((int, float, np.ndarray),(int, float, np.ndarray)) if NUMPY_DETECTED else ((int, float),(int, float))
+        formats = [int, float]
+        if NUMPY_DETECTED :
+            formats.append(np.ndarray)
+        if SYMPY_DETECTED :
+            formats.append(sp.Symbol)
+        formats = (tuple(formats),tuple(formats))
         @argument_check(*formats)
         def wrapper(temp, hr):
             return _getFunctionByName(function)(temp, hr)
@@ -177,7 +195,13 @@ def argumentChecker_2var(TEMP, HR, function="density_air"):
     
 def argumentChecker_1var(TEMP, function="density_air"):
     if ARGUMENT_CHECK :
-        formats = (int, float, np.ndarray) if NUMPY_DETECTED else (int, float)
+        formats = [int, float]
+        if NUMPY_DETECTED :
+            formats.append(np.ndarray)
+        if SYMPY_DETECTED :
+            formats.append(sp.Symbol)
+        formats = (tuple(formats))
+        #formats = (int, float, np.ndarray) if NUMPY_DETECTED else (int, float)
         @argument_check(formats)
         def wrapper(temp):
             return _getFunctionByName(function)(temp)
@@ -186,3 +210,5 @@ def argumentChecker_1var(TEMP, function="density_air"):
             return _getFunctionByName(function)(temp)
     (TEMP,) = inputAdapter(TEMP)
     return MakeUpOutput(wrapper(TEMP),function)
+
+    
