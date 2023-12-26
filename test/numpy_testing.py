@@ -94,6 +94,7 @@ def numpy_test_Process():
                 return True
             else:
                 print("WARNING: Numpy test process does not pass")
+                return False
         else:
             return False
     except Exception as exc:
