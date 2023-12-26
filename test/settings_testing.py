@@ -109,6 +109,7 @@ def settings_test_process():
             return True
         else:
             print("WARNING: Settings test Process does not pass.")
+            return False
     except Exception as exc:
         print(f"ERROR: {exc}")
         return False

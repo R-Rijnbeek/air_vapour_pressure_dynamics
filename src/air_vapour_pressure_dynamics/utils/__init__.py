@@ -93,8 +93,6 @@ if SYMPY_DETECTED :
             self.unit = unit
             super()
 
-
-
 def inputChanger(arg):
     if isinstance(arg,int):
         return float(arg)
@@ -204,7 +202,6 @@ def argumentChecker_1var(TEMP, function="density_air"):
         if SYMPY_DETECTED :
             formats.append(sp.Symbol)
         formats = (tuple(formats))
-        #formats = (int, float, np.ndarray) if NUMPY_DETECTED else (int, float)
         @argument_check(formats)
         def wrapper(temp):
             return _getFunctionByName(function)(temp)
