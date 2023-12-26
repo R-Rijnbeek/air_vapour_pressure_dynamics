@@ -10,6 +10,7 @@ from basic_decorators import argument_check
 
 # ======= GLOBAL VARIABLES ====
 
+CERO_LOG = 0.0001
 ARGUMENT_CHECK = True
 APPLY_UNITS = True
 NUMPY_DETECTED = False
@@ -109,6 +110,8 @@ def LOG(value):
         return np.log(value)
     if SYMPY_DETECTED and isinstance(value, sp.Expr):
         return sp.log(value)
+    if value < CERO_LOG :
+        value = CERO_LOG
     return math.log(value)
 
 def _vapourpressure(temp: int | float) -> UnitFloat:
