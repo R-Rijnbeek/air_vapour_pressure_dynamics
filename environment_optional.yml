@@ -7,4 +7,5 @@ dependencies:
   - pip
   - pip:
     - numpy
+    - sympy
     - air-vapour-pressure-dynamics

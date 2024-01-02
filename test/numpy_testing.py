@@ -23,6 +23,7 @@ from air_vapour_pressure_dynamics import (
 
 def importNumpy():
     try:
+        global np
         import numpy as np
         return True
     except Exception as exc:
@@ -30,7 +31,6 @@ def importNumpy():
         return False
     
 def CreateTestData():
-    import numpy as np
     temp = np.random.uniform(low=0., high=50., size=(50,))
     rh = np.random.uniform(low=0., high=100., size=(50,))
     return temp, rh

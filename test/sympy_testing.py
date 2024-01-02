@@ -23,6 +23,7 @@ from air_vapour_pressure_dynamics import (
 
 def importSympy():
     try:
+        global sp
         import sympy as sp
         return True
     except Exception as exc:
@@ -30,7 +31,6 @@ def importSympy():
         return False
     
 def CreateTestData():
-    import sympy as sp
     temp = sp.Symbol("temp")
     rh = sp.Symbol("rh")
     return temp, rh
