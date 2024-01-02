@@ -82,7 +82,9 @@ if NUMPY_DETECTED :
         @argument_check(object , np.ndarray, str)
         def __init__(self, value, unit=None):
             self.unit = unit
-
+else:
+    class UnitArray():
+        pass
 
 if SYMPY_DETECTED :
     class UnitExpression(sp.UnevaluatedExpr):
@@ -92,6 +94,20 @@ if SYMPY_DETECTED :
         def __init__(self, value, unit=None):
             self.unit = unit
             super()
+else:
+    class UnitExpression():
+        pass
+
+class NumpyArray():
+    """numpy array value: numpy.ndarray """
+    pass
+
+
+class SympySimbol():
+    pass
+class SympyExpression():
+    pass
+
 
 def inputChanger(arg):
     if isinstance(arg,int):
