@@ -74,7 +74,7 @@ class UnitFloat(float):
         self.unit = unit
 
 if NUMPY_DETECTED :
-    class UnitArray(np.ndarray):
+    class UnitNumpyArray(np.ndarray):
         @argument_check(object, np.ndarray, str)
         def __new__(cls, value, unit=None):
             return np.asarray(value).view(cls)
@@ -83,11 +83,11 @@ if NUMPY_DETECTED :
         def __init__(self, value, unit=None):
             self.unit = unit
 else:
-    class UnitArray():
+    class UnitNumpyArray():
         pass
 
 if SYMPY_DETECTED :
-    class UnitExpression(sp.UnevaluatedExpr):
+    class UnitSympyExpression(sp.UnevaluatedExpr):
         def __new__(self, value, unit=None):
             return sp.UnevaluatedExpr.__new__(self, value)
         
@@ -95,17 +95,19 @@ if SYMPY_DETECTED :
             self.unit = unit
             super()
 else:
-    class UnitExpression():
+    class UnitSympyExpression():
         pass
 
 class NumpyArray():
-    """numpy array value: numpy.ndarray """
+    """numpy array value: numpy.ndarray"""
     pass
 
 
 class SympySimbol():
+    """sympy Simbol: sympy.Simbol"""
     pass
 class SympyExpression():
+    """sympy Expression: sympy.Expr"""
     pass
 
 
@@ -187,9 +189,9 @@ def MakeUpOutput(value, functionName):
         if isinstance(value, float) :
             return UnitFloat(value, _getUnitsByName(functionName))
         if NUMPY_DETECTED and isinstance(value, np.ndarray):
-            return UnitArray(value, _getUnitsByName(functionName))
+            return UnitNumpyArray(value, _getUnitsByName(functionName))
         if SYMPY_DETECTED and isinstance(value, sp.Expr):
-            return UnitExpression(value, _getUnitsByName(functionName))
+            return UnitSympyExpression(value, _getUnitsByName(functionName))
     return value
 
 
