@@ -5,14 +5,12 @@
 from ..core import (getFunctionBackName, 
                     argumentChecker_2var, 
                     argumentChecker_1var,
-                    UnitFloat,
-                    NumpyArray,
-                    UnitNumpyArray,
-                    SympyExpression,
-                    SympySimbol,
-                    UnitSympyExpression,
                     SETTINGS
                     )
+
+from ..extra._numpy import NumpyArray, UnitNumpyArray
+from ..extra._sympy import SympySimbol, SympyExpression, UnitSympyExpression
+from ..extra._float import UnitFloat
 
 # ========== SETTERS =========
 

@@ -30,6 +30,8 @@ class Settings():
             self.setNumpyDetected(True)
             print("Numpy library detected")
         except:
+            global np
+            np = None
             print("Numpy library not detected")
 
     def sympyCheck(self):
@@ -39,6 +41,8 @@ class Settings():
             self.setSympyDetected(True)
             print("Sympy library detected")
         except:
+            global sp
+            sp = None
             print("Sympy library not detected")
     
     def LibraryCheck(self):
