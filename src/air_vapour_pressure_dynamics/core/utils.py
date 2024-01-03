@@ -10,59 +10,86 @@ from basic_decorators import argument_check
 
 # ======= GLOBAL VARIABLES ====
 
-CERO_LOG = 0.0001
-ARGUMENT_CHECK = True
-APPLY_UNITS = True
-NUMPY_DETECTED = False
-SYMPY_DETECTED = False
 
-@argument_check(bool)
-def setNumpyDetected(bool:bool) -> None:
-    global NUMPY_DETECTED
-    NUMPY_DETECTED = bool
+class INITIALIZER():
+    def __init__(self):
+        self._CERO_LOG = 0.0001
+        self._ARGUMENT_CHECK = True
+        self._APPLY_UNITS = True
+        self._NUMPY_DETECTED = False
+        self._SYMPY_DETECTED = False
+        self.LibraryCheck()
 
-@argument_check(bool)
-def setSympyDetected(bool:bool) -> None:
-    global SYMPY_DETECTED
-    SYMPY_DETECTED = bool
+    @argument_check(object, bool)
+    def setArgCheck(self, bool: bool) -> None:
+        self._ARGUMENT_CHECK = bool
 
+    @argument_check(object, bool)
+    def setApplyU(self, bool: bool) -> None:
+        self._APPLY_UNITS = bool
 
-def numpyCheck():
-    try:
-        global np
-        import numpy as np
-        setNumpyDetected(True)
-        print("Numpy library detected")
-    except:
-        print("Numpy library not detected")
+    @argument_check(object, bool)
+    def setNumpyDetected(self, bool:bool) -> None:
+        self._NUMPY_DETECTED = bool
 
-def sympyCheck():
-    try:
-        global sp
-        import sympy as sp
-        setSympyDetected(True)
-        print("Sympy library detected")
-    except:
-        print("Sympy library not detected")
+    @argument_check(object, bool)
+    def setSympyDetected(self, bool:bool) -> None:
+        self._SYMPY_DETECTED = bool
 
-def LibraryCheck():
-    numpyCheck()
-    sympyCheck()
+    def numpyCheck(self):
+        try:
+            global np
+            import numpy as np
+            self.setNumpyDetected(True)
+            print("Numpy library detected")
+        except:
+            print("Numpy library not detected")
 
-LibraryCheck()
+    def sympyCheck(self):
+        try:
+            global sp
+            import sympy as sp
+            self.setSympyDetected(True)
+            print("Sympy library detected")
+        except:
+            print("Sympy library not detected")
+    
+    def LibraryCheck(self):
+        self.numpyCheck()
+        self.sympyCheck()
 
+    @property
+    def CERO_LOG(self):
+        return self._CERO_LOG
+    
+    @property
+    def ARGUMENT_CHECK(self):
+        return self._ARGUMENT_CHECK
+    
+    @ARGUMENT_CHECK.setter
+    def ARGUMENT_CHECK(self, bool: bool):
+        self._ARGUMENT_CHECK = bool
+    
+    @property
+    def APPLY_UNITS(self):
+        return self._APPLY_UNITS
+    
+    @APPLY_UNITS.setter
+    def APPLY_UNITS(self, bool: bool):
+        self._APPLY_UNITS = bool
+    
+    @property
+    def NUMPY_DETECTED(self):
+        return self._NUMPY_DETECTED
+    
+    @property
+    def SYMPY_DETECTED(self):
+        return self._SYMPY_DETECTED
+    
 
+SETTINGS = INITIALIZER() 
+    
 # ======= FUNCTIONS ===========
-
-@argument_check(bool)
-def setArgCheck(bool: bool) -> None:
-    global ARGUMENT_CHECK
-    ARGUMENT_CHECK = bool
-
-@argument_check(bool)
-def setApplyU(bool: bool) -> None:
-    global APPLY_UNITS
-    APPLY_UNITS = bool
 
 class UnitFloat(float):
     @argument_check(object, float, str)
@@ -73,8 +100,8 @@ class UnitFloat(float):
     def __init__(self, value, unit=None):
         self.unit = unit
 
-if NUMPY_DETECTED :
-    class UnitArray(np.ndarray):
+if SETTINGS.NUMPY_DETECTED :
+    class UnitNumpyArray(np.ndarray):
         @argument_check(object, np.ndarray, str)
         def __new__(cls, value, unit=None):
             return np.asarray(value).view(cls)
@@ -82,21 +109,39 @@ if NUMPY_DETECTED :
         @argument_check(object , np.ndarray, str)
         def __init__(self, value, unit=None):
             self.unit = unit
+else:
+    class UnitNumpyArray():
+        pass
 
-
-if SYMPY_DETECTED :
-    class UnitExpression(sp.UnevaluatedExpr):
+if SETTINGS.SYMPY_DETECTED :
+    class UnitSympyExpression(sp.UnevaluatedExpr):
         def __new__(self, value, unit=None):
             return sp.UnevaluatedExpr.__new__(self, value)
         
         def __init__(self, value, unit=None):
             self.unit = unit
             super()
+else:
+    class UnitSympyExpression():
+        pass
+
+class NumpyArray():
+    """numpy array value: numpy.ndarray"""
+    pass
+
+
+class SympySimbol():
+    """sympy Simbol: sympy.Simbol"""
+    pass
+class SympyExpression():
+    """sympy Expression: sympy.Expr"""
+    pass
+
 
 def inputChanger(arg):
     if isinstance(arg,int):
         return float(arg)
-    if ( NUMPY_DETECTED and isinstance(arg,np.ndarray)):
+    if ( SETTINGS.NUMPY_DETECTED and isinstance(arg,np.ndarray)):
         return arg.astype(np.float64)
     return arg
 
@@ -104,12 +149,12 @@ def inputAdapter(*args):
     return tuple(inputChanger(arg) for arg in args)
 
 def LOG(value):
-    if NUMPY_DETECTED and isinstance(value, np.ndarray):
+    if SETTINGS.NUMPY_DETECTED and isinstance(value, np.ndarray):
         return np.log(value)
-    if SYMPY_DETECTED and isinstance(value, sp.Expr):
+    if SETTINGS.SYMPY_DETECTED and isinstance(value, sp.Expr):
         return sp.log(value)
-    if value < CERO_LOG :
-        value = CERO_LOG
+    if value < SETTINGS.CERO_LOG :
+        value = SETTINGS.CERO_LOG
     return math.log(value)
 
 def _vapourpressure(temp: int | float) -> UnitFloat:
@@ -167,22 +212,22 @@ def _getUnitsByName(functionName):
     return functionList[functionName]["unit"]
 
 def MakeUpOutput(value, functionName):
-    if APPLY_UNITS :
+    if SETTINGS.APPLY_UNITS :
         if isinstance(value, float) :
             return UnitFloat(value, _getUnitsByName(functionName))
-        if NUMPY_DETECTED and isinstance(value, np.ndarray):
-            return UnitArray(value, _getUnitsByName(functionName))
-        if SYMPY_DETECTED and isinstance(value, sp.Expr):
-            return UnitExpression(value, _getUnitsByName(functionName))
+        if SETTINGS.NUMPY_DETECTED and isinstance(value, np.ndarray):
+            return UnitNumpyArray(value, _getUnitsByName(functionName))
+        if SETTINGS.SYMPY_DETECTED and isinstance(value, sp.Expr):
+            return UnitSympyExpression(value, _getUnitsByName(functionName))
     return value
 
 
 def argumentChecker_2var(TEMP, HR, function="density_air"):
-    if ARGUMENT_CHECK :
+    if SETTINGS.ARGUMENT_CHECK :
         formats = [int, float]
-        if NUMPY_DETECTED :
+        if SETTINGS.NUMPY_DETECTED :
             formats.append(np.ndarray)
-        if SYMPY_DETECTED :
+        if SETTINGS.SYMPY_DETECTED :
             formats.append(sp.Symbol)
         formats = (tuple(formats),tuple(formats))
         @argument_check(*formats)
@@ -195,11 +240,11 @@ def argumentChecker_2var(TEMP, HR, function="density_air"):
     return MakeUpOutput(wrapper(TEMP, HR),function)
     
 def argumentChecker_1var(TEMP, function="density_air"):
-    if ARGUMENT_CHECK :
+    if SETTINGS.ARGUMENT_CHECK :
         formats = [int, float]
-        if NUMPY_DETECTED :
+        if SETTINGS.NUMPY_DETECTED :
             formats.append(np.ndarray)
-        if SYMPY_DETECTED :
+        if SETTINGS.SYMPY_DETECTED :
             formats.append(sp.Symbol)
         formats = (tuple(formats))
         @argument_check(formats)
@@ -211,4 +256,6 @@ def argumentChecker_1var(TEMP, function="density_air"):
     (TEMP,) = inputAdapter(TEMP)
     return MakeUpOutput(wrapper(TEMP),function)
 
+if __name__ == '__main__':
     
+    pass

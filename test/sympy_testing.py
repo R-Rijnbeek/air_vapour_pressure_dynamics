@@ -16,13 +16,14 @@ from air_vapour_pressure_dynamics import (
                                             moisuredeficit_m3_air, 
                                             dew_point_factor, 
                                             dew_point_temperature,
-                                            setApplyU
+                                            setApplyUnits
                                             )
 
 # ====== FUNCTION DEFINITION ====
 
 def importSympy():
     try:
+        global sp
         import sympy as sp
         return True
     except Exception as exc:
@@ -30,7 +31,6 @@ def importSympy():
         return False
     
 def CreateTestData():
-    import sympy as sp
     temp = sp.Symbol("temp")
     rh = sp.Symbol("rh")
     return temp, rh
@@ -59,7 +59,7 @@ def sympyApplyUnits(temp, rh):
         test1 = False
 
     try:
-        setApplyU(False)
+        setApplyUnits(False)
         abs_Humidity_kg = absolutehumidity_kg_air(temp, rh)
         print(abs_Humidity_kg.unit)
         test2 = False
@@ -68,7 +68,7 @@ def sympyApplyUnits(temp, rh):
         test2 = True
 
     try:
-        setApplyU(True)
+        setApplyUnits(True)
         abs_Humidity_kg = absolutehumidity_kg_air(temp, rh)
         print(abs_Humidity_kg.unit)
         test3 = True
