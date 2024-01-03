@@ -2,21 +2,15 @@
 
 # ====== IMPORTS ===============
 
-#import sys
-#sys.path.append('.')
-#from src.air_vapour_pressure_dynamics import (  
-from air_vapour_pressure_dynamics import (
-                                            vapourpressure, 
-                                            density_air, 
-                                            absolutehumidity_kg_air, 
-                                            absolutehumidity_m3_air, 
-                                            entalpie_kg_air, 
-                                            entalpie_m3_air, 
-                                            moisuredeficit_kg_air, 
-                                            moisuredeficit_m3_air, 
-                                            dew_point_factor, 
-                                            dew_point_temperature
-                                            )
+from _test_settings_ import USE_INSTALLED_PACKAGE
+
+if USE_INSTALLED_PACKAGE :
+    from air_vapour_pressure_dynamics import *
+else:
+    import sys
+    sys.path.append('.')
+    from src.air_vapour_pressure_dynamics import *
+
 
 # ====== FUNCTION DEFINITION ====
 
