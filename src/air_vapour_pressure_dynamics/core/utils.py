@@ -87,64 +87,9 @@ class INITIALIZER():
         return self._SYMPY_DETECTED
     
 
+SETTINGS = INITIALIZER() 
     
-    
-
-
-
-CERO_LOG = 0.0001
-ARGUMENT_CHECK = True
-APPLY_UNITS = True
-NUMPY_DETECTED = False
-SYMPY_DETECTED = False
-
-@argument_check(bool)
-def setNumpyDetected(bool:bool) -> None:
-    global NUMPY_DETECTED
-    NUMPY_DETECTED = bool
-
-@argument_check(bool)
-def setSympyDetected(bool:bool) -> None:
-    global SYMPY_DETECTED
-    SYMPY_DETECTED = bool
-
-
-def numpyCheck():
-    try:
-        global np
-        import numpy as np
-        setNumpyDetected(True)
-        print("Numpy library detected")
-    except:
-        print("Numpy library not detected")
-
-def sympyCheck():
-    try:
-        global sp
-        import sympy as sp
-        setSympyDetected(True)
-        print("Sympy library detected")
-    except:
-        print("Sympy library not detected")
-
-def LibraryCheck():
-    numpyCheck()
-    sympyCheck()
-
-LibraryCheck()
-
-
 # ======= FUNCTIONS ===========
-
-@argument_check(bool)
-def setArgCheck(bool: bool) -> None:
-    global ARGUMENT_CHECK
-    ARGUMENT_CHECK = bool
-
-@argument_check(bool)
-def setApplyU(bool: bool) -> None:
-    global APPLY_UNITS
-    APPLY_UNITS = bool
 
 class UnitFloat(float):
     @argument_check(object, float, str)
@@ -155,7 +100,7 @@ class UnitFloat(float):
     def __init__(self, value, unit=None):
         self.unit = unit
 
-if NUMPY_DETECTED :
+if SETTINGS.NUMPY_DETECTED :
     class UnitNumpyArray(np.ndarray):
         @argument_check(object, np.ndarray, str)
         def __new__(cls, value, unit=None):
@@ -168,7 +113,7 @@ else:
     class UnitNumpyArray():
         pass
 
-if SYMPY_DETECTED :
+if SETTINGS.SYMPY_DETECTED :
     class UnitSympyExpression(sp.UnevaluatedExpr):
         def __new__(self, value, unit=None):
             return sp.UnevaluatedExpr.__new__(self, value)
@@ -196,7 +141,7 @@ class SympyExpression():
 def inputChanger(arg):
     if isinstance(arg,int):
         return float(arg)
-    if ( NUMPY_DETECTED and isinstance(arg,np.ndarray)):
+    if ( SETTINGS.NUMPY_DETECTED and isinstance(arg,np.ndarray)):
         return arg.astype(np.float64)
     return arg
 
@@ -204,12 +149,12 @@ def inputAdapter(*args):
     return tuple(inputChanger(arg) for arg in args)
 
 def LOG(value):
-    if NUMPY_DETECTED and isinstance(value, np.ndarray):
+    if SETTINGS.NUMPY_DETECTED and isinstance(value, np.ndarray):
         return np.log(value)
-    if SYMPY_DETECTED and isinstance(value, sp.Expr):
+    if SETTINGS.SYMPY_DETECTED and isinstance(value, sp.Expr):
         return sp.log(value)
-    if value < CERO_LOG :
-        value = CERO_LOG
+    if value < SETTINGS.CERO_LOG :
+        value = SETTINGS.CERO_LOG
     return math.log(value)
 
 def _vapourpressure(temp: int | float) -> UnitFloat:
@@ -267,22 +212,22 @@ def _getUnitsByName(functionName):
     return functionList[functionName]["unit"]
 
 def MakeUpOutput(value, functionName):
-    if APPLY_UNITS :
+    if SETTINGS.APPLY_UNITS :
         if isinstance(value, float) :
             return UnitFloat(value, _getUnitsByName(functionName))
-        if NUMPY_DETECTED and isinstance(value, np.ndarray):
+        if SETTINGS.NUMPY_DETECTED and isinstance(value, np.ndarray):
             return UnitNumpyArray(value, _getUnitsByName(functionName))
-        if SYMPY_DETECTED and isinstance(value, sp.Expr):
+        if SETTINGS.SYMPY_DETECTED and isinstance(value, sp.Expr):
             return UnitSympyExpression(value, _getUnitsByName(functionName))
     return value
 
 
 def argumentChecker_2var(TEMP, HR, function="density_air"):
-    if ARGUMENT_CHECK :
+    if SETTINGS.ARGUMENT_CHECK :
         formats = [int, float]
-        if NUMPY_DETECTED :
+        if SETTINGS.NUMPY_DETECTED :
             formats.append(np.ndarray)
-        if SYMPY_DETECTED :
+        if SETTINGS.SYMPY_DETECTED :
             formats.append(sp.Symbol)
         formats = (tuple(formats),tuple(formats))
         @argument_check(*formats)
@@ -295,11 +240,11 @@ def argumentChecker_2var(TEMP, HR, function="density_air"):
     return MakeUpOutput(wrapper(TEMP, HR),function)
     
 def argumentChecker_1var(TEMP, function="density_air"):
-    if ARGUMENT_CHECK :
+    if SETTINGS.ARGUMENT_CHECK :
         formats = [int, float]
-        if NUMPY_DETECTED :
+        if SETTINGS.NUMPY_DETECTED :
             formats.append(np.ndarray)
-        if SYMPY_DETECTED :
+        if SETTINGS.SYMPY_DETECTED :
             formats.append(sp.Symbol)
         formats = (tuple(formats))
         @argument_check(formats)
@@ -313,8 +258,4 @@ def argumentChecker_1var(TEMP, function="density_air"):
 
 if __name__ == '__main__':
     
-    setings = INITIALIZER()
-
-    setings.NUMPY_DETECTED = False
-
-    print(setings.NUMPY_DETECTED)
+    pass

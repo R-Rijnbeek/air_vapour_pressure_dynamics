@@ -16,7 +16,7 @@ from src.air_vapour_pressure_dynamics import (
                                             moisuredeficit_m3_air, 
                                             dew_point_factor, 
                                             dew_point_temperature,
-                                            setApplyU
+                                            setApplyUnits
                                             )
 
 # ====== FUNCTION DEFINITION ====
@@ -59,7 +59,7 @@ def numpyApplyUnits(temp, rh):
         test1 = False
 
     try:
-        setApplyU(False)
+        setApplyUnits(False)
         abs_Humidity_kg = absolutehumidity_kg_air(temp, rh)
         print(abs_Humidity_kg.unit)
         test2 = False
@@ -68,7 +68,7 @@ def numpyApplyUnits(temp, rh):
         test2 = True
 
     try:
-        setApplyU(True)
+        setApplyUnits(True)
         abs_Humidity_kg = absolutehumidity_kg_air(temp, rh)
         print(abs_Humidity_kg.unit)
         test3 = True

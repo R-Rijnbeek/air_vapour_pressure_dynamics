@@ -6,38 +6,36 @@ if __package__ is None or __package__ == '':
     # uses current directory visibility
     from utils import ( getFunctionBackName, 
                         argumentChecker_2var, 
-                        argumentChecker_1var, 
-                        setArgCheck,
-                        setApplyU,
+                        argumentChecker_1var,
                         UnitFloat,
                         NumpyArray,
                         UnitNumpyArray,
                         SympyExpression,
                         SympySimbol,
-                        UnitSympyExpression
+                        UnitSympyExpression,
+                        SETTINGS
                         )
 else:
     # uses current package visibility
     from .utils import (getFunctionBackName, 
                         argumentChecker_2var, 
-                        argumentChecker_1var, 
-                        setArgCheck,
-                        setApplyU,
+                        argumentChecker_1var,
                         UnitFloat,
                         NumpyArray,
                         UnitNumpyArray,
                         SympyExpression,
                         SympySimbol,
-                        UnitSympyExpression
+                        UnitSympyExpression,
+                        SETTINGS
                         )
 
 # ========== SETTERS =========
 
 def setArgumentCheck(bool: bool) -> None:
-    setArgCheck(bool)
+    SETTINGS.ARGUMENT_CHECK = bool
 
 def setApplyUnits(bool: bool) -> None:
-    setApplyU(bool)
+    SETTINGS.APPLY_UNITS = bool
 
 # ======= BASE FUNCTIONS =====
 
@@ -313,4 +311,4 @@ def dew_point_temperature(temp: int | float | NumpyArray | SympySimbol, rh: int 
 
 if __name__ == '__main__':
     
-    pass
+    dew_point_temperature(20,30)
