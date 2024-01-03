@@ -16,14 +16,6 @@ class Settings():
         self.LibraryCheck()
 
     @argument_check(object, bool)
-    def setArgCheck(self, bool: bool) -> None:
-        self._ARGUMENT_CHECK = bool
-
-    @argument_check(object, bool)
-    def setApplyU(self, bool: bool) -> None:
-        self._APPLY_UNITS = bool
-
-    @argument_check(object, bool)
     def setNumpyDetected(self, bool:bool) -> None:
         self._NUMPY_DETECTED = bool
 
@@ -61,7 +53,9 @@ class Settings():
     def ARGUMENT_CHECK(self):
         return self._ARGUMENT_CHECK
     
+    
     @ARGUMENT_CHECK.setter
+    @argument_check(object, bool)
     def ARGUMENT_CHECK(self, bool: bool):
         self._ARGUMENT_CHECK = bool
     
@@ -70,6 +64,7 @@ class Settings():
         return self._APPLY_UNITS
     
     @APPLY_UNITS.setter
+    @argument_check(object, bool)
     def APPLY_UNITS(self, bool: bool):
         self._APPLY_UNITS = bool
     
