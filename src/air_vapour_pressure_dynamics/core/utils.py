@@ -10,6 +10,88 @@ from basic_decorators import argument_check
 
 # ======= GLOBAL VARIABLES ====
 
+
+class INITIALIZER():
+    def __init__(self):
+        self._CERO_LOG = 0.0001
+        self._ARGUMENT_CHECK = True
+        self._APPLY_UNITS = True
+        self._NUMPY_DETECTED = False
+        self._SYMPY_DETECTED = False
+        self.LibraryCheck()
+
+    @argument_check(object, bool)
+    def setArgCheck(self, bool: bool) -> None:
+        self._ARGUMENT_CHECK = bool
+
+    @argument_check(object, bool)
+    def setApplyU(self, bool: bool) -> None:
+        self._APPLY_UNITS = bool
+
+    @argument_check(object, bool)
+    def setNumpyDetected(self, bool:bool) -> None:
+        self._NUMPY_DETECTED = bool
+
+    @argument_check(object, bool)
+    def setSympyDetected(self, bool:bool) -> None:
+        self._SYMPY_DETECTED = bool
+
+    def numpyCheck(self):
+        try:
+            global np
+            import numpy as np
+            self.setNumpyDetected(True)
+            print("Numpy library detected")
+        except:
+            print("Numpy library not detected")
+
+    def sympyCheck(self):
+        try:
+            global sp
+            import sympy as sp
+            self.setSympyDetected(True)
+            print("Sympy library detected")
+        except:
+            print("Sympy library not detected")
+    
+    def LibraryCheck(self):
+        self.numpyCheck()
+        self.sympyCheck()
+
+    @property
+    def CERO_LOG(self):
+        return self._CERO_LOG
+    
+    @property
+    def ARGUMENT_CHECK(self):
+        return self._ARGUMENT_CHECK
+    
+    @ARGUMENT_CHECK.setter
+    def ARGUMENT_CHECK(self, bool: bool):
+        self._ARGUMENT_CHECK = bool
+    
+    @property
+    def APPLY_UNITS(self):
+        return self._APPLY_UNITS
+    
+    @APPLY_UNITS.setter
+    def APPLY_UNITS(self, bool: bool):
+        self._APPLY_UNITS = bool
+    
+    @property
+    def NUMPY_DETECTED(self):
+        return self._NUMPY_DETECTED
+    
+    @property
+    def SYMPY_DETECTED(self):
+        return self._SYMPY_DETECTED
+    
+
+    
+    
+
+
+
 CERO_LOG = 0.0001
 ARGUMENT_CHECK = True
 APPLY_UNITS = True
@@ -229,4 +311,10 @@ def argumentChecker_1var(TEMP, function="density_air"):
     (TEMP,) = inputAdapter(TEMP)
     return MakeUpOutput(wrapper(TEMP),function)
 
+if __name__ == '__main__':
     
+    setings = INITIALIZER()
+
+    setings.NUMPY_DETECTED = False
+
+    print(setings.NUMPY_DETECTED)
