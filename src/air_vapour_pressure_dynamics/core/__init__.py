@@ -3,61 +3,16 @@
 # ======== IMPORTS ===========
 
 import inspect
-
 import math
 
 from basic_decorators import argument_check
 
 from ..initialize import SETTINGS, np, sp
+from ..extra._numpy import UnitNumpyArray
+from ..extra._sympy import UnitSympyExpression
+from ..extra._float import UnitFloat
     
 # ======= FUNCTIONS ===========
-
-class UnitFloat(float):
-    @argument_check(object, float, str)
-    def __new__(self, value, unit=None):
-       return float.__new__(self, value)
-    
-    @argument_check(object ,float, str)
-    def __init__(self, value, unit=None):
-        self.unit = unit
-
-if SETTINGS.NUMPY_DETECTED :
-    class UnitNumpyArray(np.ndarray):
-        @argument_check(object, np.ndarray, str)
-        def __new__(cls, value, unit=None):
-            return np.asarray(value).view(cls)
-        
-        @argument_check(object , np.ndarray, str)
-        def __init__(self, value, unit=None):
-            self.unit = unit
-else:
-    class UnitNumpyArray():
-        pass
-
-if SETTINGS.SYMPY_DETECTED :
-    class UnitSympyExpression(sp.UnevaluatedExpr):
-        def __new__(self, value, unit=None):
-            return sp.UnevaluatedExpr.__new__(self, value)
-        
-        def __init__(self, value, unit=None):
-            self.unit = unit
-            super()
-else:
-    class UnitSympyExpression():
-        pass
-
-class NumpyArray():
-    """numpy array value: numpy.ndarray"""
-    pass
-
-
-class SympySimbol():
-    """sympy Simbol: sympy.Simbol"""
-    pass
-class SympyExpression():
-    """sympy Expression: sympy.Expr"""
-    pass
-
 
 def inputChanger(arg):
     if isinstance(arg,int):
