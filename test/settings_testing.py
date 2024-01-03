@@ -2,10 +2,10 @@
 
 # ====== IMPORTS ===============
 
-import sys
-sys.path.append('.')
-from src.air_vapour_pressure_dynamics import (  
-#from air_vapour_pressure_dynamics import ( 
+#import sys
+#sys.path.append('.')
+#from src.air_vapour_pressure_dynamics import (  
+from air_vapour_pressure_dynamics import ( 
                                             density_air, 
                                             setArgumentCheck,
                                             setApplyUnits
