@@ -2,32 +2,17 @@
 
 # ======== IMPORTS ===========
 
-if __package__ is None or __package__ == '':
-    # uses current directory visibility
-    from utils import ( getFunctionBackName, 
-                        argumentChecker_2var, 
-                        argumentChecker_1var,
-                        UnitFloat,
-                        NumpyArray,
-                        UnitNumpyArray,
-                        SympyExpression,
-                        SympySimbol,
-                        UnitSympyExpression,
-                        SETTINGS
-                        )
-else:
-    # uses current package visibility
-    from .utils import (getFunctionBackName, 
-                        argumentChecker_2var, 
-                        argumentChecker_1var,
-                        UnitFloat,
-                        NumpyArray,
-                        UnitNumpyArray,
-                        SympyExpression,
-                        SympySimbol,
-                        UnitSympyExpression,
-                        SETTINGS
-                        )
+from .utils import (getFunctionBackName, 
+                    argumentChecker_2var, 
+                    argumentChecker_1var,
+                    UnitFloat,
+                    NumpyArray,
+                    UnitNumpyArray,
+                    SympyExpression,
+                    SympySimbol,
+                    UnitSympyExpression,
+                    SETTINGS
+                    )
 
 # ========== SETTERS =========
 
@@ -311,4 +296,4 @@ def dew_point_temperature(temp: int | float | NumpyArray | SympySimbol, rh: int 
 
 if __name__ == '__main__':
     
-    dew_point_temperature(20,30)
+    pass
