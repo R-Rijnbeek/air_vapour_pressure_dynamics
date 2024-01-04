@@ -8,8 +8,8 @@ from ..initialize import SETTINGS, np
 
 # ======= CONSTANTS ============
 
-numpyArray = np.ndarray
-numpyFloat64 = np.float64
+numpyArray = np.ndarray if (SETTINGS.NUMPY_DETECTED) else None
+numpyFloat64 = np.float64 if (SETTINGS.NUMPY_DETECTED) else None
 
 # ======= CLASSES ==============
 

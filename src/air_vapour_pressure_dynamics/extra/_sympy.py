@@ -8,7 +8,7 @@ from ..initialize import SETTINGS, sp
 
 # ======= CONSTANTS ============
 
-sympySymbol = sp.Symbol
+sympySymbol = sp.Symbol if SETTINGS.SYMPY_DETECTED else None
 
 # ======= CLASSES ============
 
