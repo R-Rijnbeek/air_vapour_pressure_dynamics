@@ -6,11 +6,16 @@ from basic_decorators import argument_check
 
 from ..initialize import SETTINGS, np
 
-# ======= FUNCTIONS ===========
+# ======= CONSTANTS ============
+
+numpyArray = np.ndarray
+numpyFloat64 = np.float64
+
+# ======= CLASSES ==============
 
 if SETTINGS.NUMPY_DETECTED :
     class UnitNumpyArray(np.ndarray):
-        
+
         @argument_check(object, np.ndarray, str)
         def __new__(cls, value, unit=None):
             return np.asarray(value).view(cls)
@@ -25,6 +30,15 @@ else:
 class NumpyArray():
     """numpy array value: numpy.ndarray"""
     pass
+
+
+# ======= FUNCTIONS ============
+
+def log_numpy(value):
+    return np.log(value)
+
+def isNumpyValue(value):
+    return SETTINGS.NUMPY_DETECTED and isinstance(value, np.ndarray)
 
 if __name__ == '__main__':
     

@@ -8,4 +8,4 @@ dependencies:
   - pip:
     - numpy
     - sympy
-    - air-vapour-pressure-dynamics==1.8.5
+    - air-vapour-pressure-dynamics==1.8.6
