@@ -1,5 +1,11 @@
+# -*- coding: utf-8 -*-
+
+# ======== IMPORTS ===========
+
 import math
 from ..initialize import SETTINGS, np, sp
+
+# ======= FUNCTIONS ===========
 
 def LOG(value):
     if SETTINGS.NUMPY_DETECTED and isinstance(value, np.ndarray):
@@ -41,16 +47,51 @@ def _dew_point_factor(temp: int | float, rh: int | float) -> float:
 def _dew_point_temperature(temp: int | float, rh: int | float) -> float:
     return (243.5*_dew_point_factor(temp, rh))/(17.67 - _dew_point_factor(temp, rh))
 
+# ======= CONFIGURATION DICT ===========
 
 functionList = {
-    "vapourpressure": {"function":_vapourpressure, "unit": "Pa"},
-    "density_air" : {"function":_density_air, "unit": "kg/m^3"},
-    "absolutehumidity_kg_air" : {"function":_absolutehumidity_kg_air, "unit": "g/Kg"},
-    "absolutehumidity_m3_air" : {"function":_absolutehumidity_m3_air, "unit": "g/m³"},
-    "entalpie_kg_air" : {"function":_entalpie_kg_air, "unit": "KJ/Kg"},
-    "entalpie_m3_air" : {"function":_entalpie_m3_air, "unit": "KJ/m³"},
-    "moisuredeficit_kg_air" : {"function":_moisuredeficit_kg_air, "unit": "gr/Kg"},
-    "moisuredeficit_m3_air" : {"function":_moisuredeficit_m3_air, "unit": "gr/m³"},
-    "dew_point_factor" : {"function":_dew_point_factor, "unit": ""},
-    "dew_point_temperature": {"function":_dew_point_temperature, "unit": "°C"},
+    "vapourpressure": {
+        "function":_vapourpressure, 
+        "unit": "Pa"
+        },
+    "density_air" : {
+        "function":_density_air,
+        "unit": "kg/m^3"
+        },
+    "absolutehumidity_kg_air" : {
+        "function":_absolutehumidity_kg_air, 
+        "unit": "g/Kg"
+        },
+    "absolutehumidity_m3_air" : {
+        "function":_absolutehumidity_m3_air, 
+        "unit": "g/m³"
+        },
+    "entalpie_kg_air" : {
+        "function":_entalpie_kg_air,
+        "unit": "KJ/Kg"
+        },
+    "entalpie_m3_air" : {
+        "function":_entalpie_m3_air, 
+        "unit": "KJ/m³"
+        },
+    "moisuredeficit_kg_air" : {
+        "function":_moisuredeficit_kg_air, 
+        "unit": "gr/Kg"
+        },
+    "moisuredeficit_m3_air" : {
+        "function":_moisuredeficit_m3_air, 
+        "unit": "gr/m³"
+        },
+    "dew_point_factor" : {
+        "function":_dew_point_factor, 
+        "unit": ""
+        },
+    "dew_point_temperature": {
+        "function":_dew_point_temperature, 
+        "unit": "°C"
+        }
 }
+
+if __name__ == '__main__':
+    
+    pass
