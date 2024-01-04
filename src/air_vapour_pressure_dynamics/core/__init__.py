@@ -7,8 +7,8 @@ import inspect
 from basic_decorators import argument_check
 
 from ..initialize import SETTINGS, np, sp
-from ..extra._numpy import UnitNumpyArray
-from ..extra._sympy import UnitSympyExpression
+from ..extra._numpy import UnitNumpyArray, isNumpyValue
+from ..extra._sympy import UnitSympyExpression, isSympyExpr
 from ..extra._float import UnitFloat
 from ..calculations import functionList
     
@@ -17,7 +17,7 @@ from ..calculations import functionList
 def inputChanger(arg):
     if isinstance(arg,int):
         return float(arg)
-    if ( SETTINGS.NUMPY_DETECTED and isinstance(arg,np.ndarray)):
+    if ( isNumpyValue(arg) ):
         return arg.astype(np.float64)
     return arg
 
@@ -37,9 +37,9 @@ def MakeUpOutput(value, functionName):
     if SETTINGS.APPLY_UNITS :
         if isinstance(value, float) :
             return UnitFloat(value, _getUnitsByName(functionName))
-        if SETTINGS.NUMPY_DETECTED and isinstance(value, np.ndarray):
+        if isNumpyValue(value):
             return UnitNumpyArray(value, _getUnitsByName(functionName))
-        if SETTINGS.SYMPY_DETECTED and isinstance(value, sp.Expr):
+        if isSympyExpr(value):
             return UnitSympyExpression(value, _getUnitsByName(functionName))
     return value
 

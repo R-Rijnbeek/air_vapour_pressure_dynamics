@@ -29,6 +29,9 @@ class NumpyArray():
 def log_numpy(value):
     return np.log(value)
 
+def isNumpyValue(value):
+    return SETTINGS.NUMPY_DETECTED and isinstance(value, np.ndarray)
+
 if __name__ == '__main__':
     
     pass

@@ -33,6 +33,9 @@ class SympyExpression():
 def log_sympy(value):
     return sp.log(value)
 
+def isSympyExpr(value):
+    return SETTINGS.SYMPY_DETECTED and isinstance(value, sp.Expr)
+
 if __name__ == '__main__':
     
     pass

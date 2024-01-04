@@ -4,18 +4,18 @@
 
 import math
 
-from ..initialize import SETTINGS, np, sp
+from ..initialize import SETTINGS
 from ..extra._float import log_float
-from ..extra._numpy import log_numpy
-from ..extra._sympy import log_sympy
+from ..extra._numpy import log_numpy, isNumpyValue
+from ..extra._sympy import log_sympy, isSympyExpr
 
 
 # ======= FUNCTIONS ===========
 
 def LOG(value):
-    if SETTINGS.NUMPY_DETECTED and isinstance(value, np.ndarray):
+    if isNumpyValue(value):
         return log_numpy(value)
-    if SETTINGS.SYMPY_DETECTED and isinstance(value, sp.Expr):
+    if isSympyExpr(value):
         return log_sympy(value)
     if value < SETTINGS.CERO_LOG :
         value = SETTINGS.CERO_LOG
