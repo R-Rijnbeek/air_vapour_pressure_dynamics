@@ -10,7 +10,7 @@ from ..initialize import SETTINGS, np
 
 if SETTINGS.NUMPY_DETECTED :
     class UnitNumpyArray(np.ndarray):
-        
+
         @argument_check(object, np.ndarray, str)
         def __new__(cls, value, unit=None):
             return np.asarray(value).view(cls)
@@ -25,6 +25,9 @@ else:
 class NumpyArray():
     """numpy array value: numpy.ndarray"""
     pass
+
+def log_numpy(value):
+    return np.log(value)
 
 if __name__ == '__main__':
     

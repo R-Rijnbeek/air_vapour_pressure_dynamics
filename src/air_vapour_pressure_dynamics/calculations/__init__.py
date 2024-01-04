@@ -3,18 +3,23 @@
 # ======== IMPORTS ===========
 
 import math
+
 from ..initialize import SETTINGS, np, sp
+from ..extra._float import log_float
+from ..extra._numpy import log_numpy
+from ..extra._sympy import log_sympy
+
 
 # ======= FUNCTIONS ===========
 
 def LOG(value):
     if SETTINGS.NUMPY_DETECTED and isinstance(value, np.ndarray):
-        return np.log(value)
+        return log_numpy(value)
     if SETTINGS.SYMPY_DETECTED and isinstance(value, sp.Expr):
-        return sp.log(value)
+        return log_sympy(value)
     if value < SETTINGS.CERO_LOG :
         value = SETTINGS.CERO_LOG
-    return math.log(value)
+    return log_float(value)
 
 def _vapourpressure(temp: int | float) -> float:
     return 10**(8.07131 - (1730.63/(233.426+temp)))*133.322

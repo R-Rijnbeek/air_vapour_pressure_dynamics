@@ -30,6 +30,9 @@ class SympyExpression():
     """sympy Expression: sympy.Expr"""
     pass
 
+def log_sympy(value):
+    return sp.log(value)
+
 if __name__ == '__main__':
     
     pass
