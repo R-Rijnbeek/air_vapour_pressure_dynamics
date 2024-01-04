@@ -6,9 +6,9 @@ import inspect
 
 from basic_decorators import argument_check
 
-from ..initialize import SETTINGS, np, sp
-from ..extra._numpy import UnitNumpyArray, isNumpyValue
-from ..extra._sympy import UnitSympyExpression, isSympyExpr
+from ..initialize import SETTINGS
+from ..extra._numpy import UnitNumpyArray, isNumpyValue, numpyArray, numpyFloat64
+from ..extra._sympy import UnitSympyExpression, isSympyExpr, sympySymbol
 from ..extra._float import UnitFloat
 from ..calculations import functionList
     
@@ -18,7 +18,7 @@ def inputChanger(arg):
     if isinstance(arg,int):
         return float(arg)
     if ( isNumpyValue(arg) ):
-        return arg.astype(np.float64)
+        return arg.astype(numpyFloat64)
     return arg
 
 def inputAdapter(*args):
@@ -48,9 +48,9 @@ def argumentChecker_2var(TEMP, HR, function="density_air"):
     if SETTINGS.ARGUMENT_CHECK :
         formats = [int, float]
         if SETTINGS.NUMPY_DETECTED :
-            formats.append(np.ndarray)
+            formats.append(numpyArray)
         if SETTINGS.SYMPY_DETECTED :
-            formats.append(sp.Symbol)
+            formats.append(sympySymbol)
         formats = (tuple(formats),tuple(formats))
         @argument_check(*formats)
         def wrapper(temp, hr):
@@ -65,9 +65,9 @@ def argumentChecker_1var(TEMP, function="density_air"):
     if SETTINGS.ARGUMENT_CHECK :
         formats = [int, float]
         if SETTINGS.NUMPY_DETECTED :
-            formats.append(np.ndarray)
+            formats.append(numpyArray)
         if SETTINGS.SYMPY_DETECTED :
-            formats.append(sp.Symbol)
+            formats.append(sympySymbol)
         formats = (tuple(formats))
         @argument_check(formats)
         def wrapper(temp):

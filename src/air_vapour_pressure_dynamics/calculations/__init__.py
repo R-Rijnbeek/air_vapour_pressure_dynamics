@@ -2,8 +2,6 @@
 
 # ======== IMPORTS ===========
 
-import math
-
 from ..initialize import SETTINGS
 from ..extra._float import log_float
 from ..extra._numpy import log_numpy, isNumpyValue

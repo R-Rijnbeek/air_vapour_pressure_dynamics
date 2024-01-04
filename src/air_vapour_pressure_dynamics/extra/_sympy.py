@@ -6,6 +6,8 @@ from basic_decorators import argument_check
 
 from ..initialize import SETTINGS, sp
 
+sympySymbol = sp.Symbol
+
 # ======= FUNCTIONS ===========
 
 if SETTINGS.SYMPY_DETECTED :

@@ -6,6 +6,10 @@ from basic_decorators import argument_check
 
 from ..initialize import SETTINGS, np
 
+
+numpyArray = np.ndarray
+numpyFloat64 = np.float64
+
 # ======= FUNCTIONS ===========
 
 if SETTINGS.NUMPY_DETECTED :
@@ -31,6 +35,8 @@ def log_numpy(value):
 
 def isNumpyValue(value):
     return SETTINGS.NUMPY_DETECTED and isinstance(value, np.ndarray)
+
+
 
 if __name__ == '__main__':
     
