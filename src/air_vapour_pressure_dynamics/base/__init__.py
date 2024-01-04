@@ -2,12 +2,8 @@
 
 # ======== IMPORTS ===========
 
-from ..core import (getFunctionBackName, 
-                    argumentChecker_2var, 
-                    argumentChecker_1var,
-                    SETTINGS
-                    )
-
+from ..core import controller
+from ..initialize import SETTINGS
 from ..extra._numpy import NumpyArray, UnitNumpyArray
 from ..extra._sympy import SympySimbol, SympyExpression, UnitSympyExpression
 from ..extra._float import UnitFloat
@@ -39,14 +35,14 @@ def vapourpressure(temp: int | float | NumpyArray | SympySimbol) -> float | Unit
         - INPUT = (numpy.ndarray) => OUTPUT = (numpy.ndarray) 
         - INPUT = (sympy.Simbol) => OUTPUT = (sympy.Expr)
     
-    - setApplyUnits(False) => default
+    - setApplyUnits(True) => default
 
         - INPUT (float) => OUTPUT (UnitFloat) 
         - INPUT = (int) => OUTPUT = (UnitFloat) 
         - INPUT = (numpy.ndarray) => OUTPUT = (UnitNumpyArray) 
         - INPUT = (sympy.Simbol) => OUTPUT = (UnitSympyExpression)
     """
-    return argumentChecker_1var(temp, function=getFunctionBackName())
+    return controller(temp)
 
 def density_air(temp: int | float | NumpyArray | SympySimbol, rh: int | float | NumpyArray | SympySimbol) -> float | UnitFloat | NumpyArray | UnitNumpyArray | SympyExpression | UnitSympyExpression :
     """
@@ -66,14 +62,14 @@ def density_air(temp: int | float | NumpyArray | SympySimbol, rh: int | float | 
         - INPUT = (numpy.ndarray) => OUTPUT = (numpy.ndarray) 
         - INPUT = (sympy.Simbol) => OUTPUT = (sympy.Expr)
     
-    - setApplyUnits(False) => default
+    - setApplyUnits(True) => default
 
         - INPUT (float) => OUTPUT (UnitFloat) 
         - INPUT = (int) => OUTPUT = (UnitFloat) 
         - INPUT = (numpy.ndarray) => OUTPUT = (UnitNumpyArray) 
         - INPUT = (sympy.Simbol) => OUTPUT = (UnitSympyExpression)
     """
-    return argumentChecker_2var(temp, rh, function=getFunctionBackName())
+    return controller(temp, rh)
 
 def absolutehumidity_kg_air(temp: int | float | NumpyArray | SympySimbol, rh: int | float | NumpyArray | SympySimbol) -> float | UnitFloat | NumpyArray | UnitNumpyArray | SympyExpression | UnitSympyExpression :
     """
@@ -93,14 +89,14 @@ def absolutehumidity_kg_air(temp: int | float | NumpyArray | SympySimbol, rh: in
         - INPUT = (numpy.ndarray) => OUTPUT = (numpy.ndarray) 
         - INPUT = (sympy.Simbol) => OUTPUT = (sympy.Expr)
     
-    - setApplyUnits(False) => default
+    - setApplyUnits(True) => default
 
         - INPUT (float) => OUTPUT (UnitFloat) 
         - INPUT = (int) => OUTPUT = (UnitFloat) 
         - INPUT = (numpy.ndarray) => OUTPUT = (UnitNumpyArray) 
         - INPUT = (sympy.Simbol) => OUTPUT = (UnitSympyExpression)
     """
-    return argumentChecker_2var(temp, rh, function=getFunctionBackName())
+    return controller(temp, rh)
 
 def absolutehumidity_m3_air(temp: int | float | NumpyArray | SympySimbol, rh: int | float | NumpyArray | SympySimbol) -> float | UnitFloat | NumpyArray | UnitNumpyArray | SympyExpression | UnitSympyExpression:
     """
@@ -120,14 +116,14 @@ def absolutehumidity_m3_air(temp: int | float | NumpyArray | SympySimbol, rh: in
         - INPUT = (numpy.ndarray) => OUTPUT = (numpy.ndarray) 
         - INPUT = (sympy.Simbol) => OUTPUT = (sympy.Expr)
     
-    - setApplyUnits(False) => default
+    - setApplyUnits(True) => default
 
         - INPUT (float) => OUTPUT (UnitFloat) 
         - INPUT = (int) => OUTPUT = (UnitFloat) 
         - INPUT = (numpy.ndarray) => OUTPUT = (UnitNumpyArray) 
         - INPUT = (sympy.Simbol) => OUTPUT = (UnitSympyExpression)
     """
-    return argumentChecker_2var(temp, rh, function=getFunctionBackName())
+    return controller(temp, rh)
 
 def entalpie_kg_air(temp: int | float | NumpyArray | SympySimbol, rh: int | float | NumpyArray | SympySimbol) -> float | UnitFloat | NumpyArray | UnitNumpyArray | SympyExpression | UnitSympyExpression :
     """
@@ -147,14 +143,14 @@ def entalpie_kg_air(temp: int | float | NumpyArray | SympySimbol, rh: int | floa
         - INPUT = (numpy.ndarray) => OUTPUT = (numpy.ndarray) 
         - INPUT = (sympy.Simbol) => OUTPUT = (sympy.Expr)
     
-    - setApplyUnits(False) => default
+    - setApplyUnits(True) => default
 
         - INPUT (float) => OUTPUT (UnitFloat) 
         - INPUT = (int) => OUTPUT = (UnitFloat) 
         - INPUT = (numpy.ndarray) => OUTPUT = (UnitNumpyArray) 
         - INPUT = (sympy.Simbol) => OUTPUT = (UnitSympyExpression)
     """
-    return argumentChecker_2var(temp, rh, function=getFunctionBackName())
+    return controller(temp, rh)
 
 def entalpie_m3_air(temp: int | float | NumpyArray | SympySimbol, rh: int | float | NumpyArray | SympySimbol) -> float | UnitFloat | NumpyArray | UnitNumpyArray | SympyExpression | UnitSympyExpression:
     """
@@ -174,14 +170,14 @@ def entalpie_m3_air(temp: int | float | NumpyArray | SympySimbol, rh: int | floa
         - INPUT = (numpy.ndarray) => OUTPUT = (numpy.ndarray) 
         - INPUT = (sympy.Simbol) => OUTPUT = (sympy.Expr)
     
-    - setApplyUnits(False) => default
+    - setApplyUnits(True) => default
 
         - INPUT (float) => OUTPUT (UnitFloat) 
         - INPUT = (int) => OUTPUT = (UnitFloat) 
         - INPUT = (numpy.ndarray) => OUTPUT = (UnitNumpyArray) 
         - INPUT = (sympy.Simbol) => OUTPUT = (UnitSympyExpression)
     """
-    return argumentChecker_2var(temp, rh, function=getFunctionBackName())
+    return controller(temp, rh)
 
 def moisuredeficit_kg_air(temp: int | float | NumpyArray | SympySimbol, rh: int | float | NumpyArray | SympySimbol) -> float | UnitFloat | NumpyArray | UnitNumpyArray | SympyExpression | UnitSympyExpression:
     """
@@ -201,14 +197,14 @@ def moisuredeficit_kg_air(temp: int | float | NumpyArray | SympySimbol, rh: int 
         - INPUT = (numpy.ndarray) => OUTPUT = (numpy.ndarray) 
         - INPUT = (sympy.Simbol) => OUTPUT = (sympy.Expr)
     
-    - setApplyUnits(False) => default
+    - setApplyUnits(True) => default
 
         - INPUT (float) => OUTPUT (UnitFloat) 
         - INPUT = (int) => OUTPUT = (UnitFloat) 
         - INPUT = (numpy.ndarray) => OUTPUT = (UnitNumpyArray) 
         - INPUT = (sympy.Simbol) => OUTPUT = (UnitSympyExpression)
     """
-    return argumentChecker_2var(temp, rh, function=getFunctionBackName())
+    return controller(temp, rh)
 
 def moisuredeficit_m3_air(temp: int | float | NumpyArray | SympySimbol, rh: int | float | NumpyArray | SympySimbol) -> float | UnitFloat | NumpyArray | UnitNumpyArray | SympyExpression | UnitSympyExpression:
     """
@@ -228,14 +224,14 @@ def moisuredeficit_m3_air(temp: int | float | NumpyArray | SympySimbol, rh: int 
         - INPUT = (numpy.ndarray) => OUTPUT = (numpy.ndarray) 
         - INPUT = (sympy.Simbol) => OUTPUT = (sympy.Expr)
     
-    - setApplyUnits(False) => default
+    - setApplyUnits(True) => default
 
         - INPUT (float) => OUTPUT (UnitFloat) 
         - INPUT = (int) => OUTPUT = (UnitFloat) 
         - INPUT = (numpy.ndarray) => OUTPUT = (UnitNumpyArray) 
         - INPUT = (sympy.Simbol) => OUTPUT = (UnitSympyExpression)
     """
-    return argumentChecker_2var(temp, rh, function=getFunctionBackName())
+    return controller(temp, rh)
 
 def dew_point_factor(temp: int | float | NumpyArray | SympySimbol, rh: int | float | NumpyArray | SympySimbol) -> float | UnitFloat | NumpyArray | UnitNumpyArray | SympyExpression | UnitSympyExpression:
     """
@@ -255,14 +251,14 @@ def dew_point_factor(temp: int | float | NumpyArray | SympySimbol, rh: int | flo
         - INPUT = (numpy.ndarray) => OUTPUT = (numpy.ndarray) 
         - INPUT = (sympy.Simbol) => OUTPUT = (sympy.Expr)
     
-    - setApplyUnits(False) => default
+    - setApplyUnits(True) => default
 
         - INPUT (float) => OUTPUT (UnitFloat) 
         - INPUT = (int) => OUTPUT = (UnitFloat) 
         - INPUT = (numpy.ndarray) => OUTPUT = (UnitNumpyArray) 
         - INPUT = (sympy.Simbol) => OUTPUT = (UnitSympyExpression)
     """
-    return argumentChecker_2var(temp, rh, function=getFunctionBackName())
+    return controller(temp, rh)
 
 def dew_point_temperature(temp: int | float | NumpyArray | SympySimbol, rh: int | float | NumpyArray | SympySimbol) -> float | UnitFloat | NumpyArray | UnitNumpyArray | SympyExpression | UnitSympyExpression:
     """
@@ -282,14 +278,14 @@ def dew_point_temperature(temp: int | float | NumpyArray | SympySimbol, rh: int 
         - INPUT = (numpy.ndarray) => OUTPUT = (numpy.ndarray) 
         - INPUT = (sympy.Simbol) => OUTPUT = (sympy.Expr)
     
-    - setApplyUnits(False) => default
+    - setApplyUnits(True) => default
 
         - INPUT (float) => OUTPUT (UnitFloat) 
         - INPUT = (int) => OUTPUT = (UnitFloat) 
         - INPUT = (numpy.ndarray) => OUTPUT = (UnitNumpyArray) 
         - INPUT = (sympy.Simbol) => OUTPUT = (UnitSympyExpression)
     """
-    return argumentChecker_2var(temp, rh, function=getFunctionBackName())
+    return controller(temp, rh)
 
 
 if __name__ == '__main__':

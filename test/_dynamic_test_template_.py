@@ -1,5 +1,5 @@
 import sys
 sys.path.append('.')
-from src.air_vapour_pressure_dynamics import (  absolutehumidity_m3_air )
+from src.air_vapour_pressure_dynamics import (  vapourpressure )
 
-print(absolutehumidity_m3_air(20,90))
+print(vapourpressure(10))
