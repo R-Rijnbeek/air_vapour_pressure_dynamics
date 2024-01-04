@@ -40,10 +40,11 @@ def _makeUpOutput(value, functionName):
             return UnitSympyExpression(value, _getUnitsByName(functionName))
     return value
 
-def getFunctionBackName():
-    return inspect.currentframe().f_back.f_code.co_name
+def _getFunctionBackName_X2():
+    return inspect.currentframe().f_back.f_back.f_code.co_name
 
-def controller(*args, function = "density_air"):
+def controller(*args):
+    function = _getFunctionBackName_X2()
     argument_lenght = len(args)
     if (0 < argument_lenght < 3 ):
 
