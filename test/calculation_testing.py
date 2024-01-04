@@ -18,7 +18,7 @@ def testValues(temp, rh):
 
     vp = vapourpressure(temp)
     ad = density_air(temp, rh)
-    ab_hu_kg =absolutehumidity_kg_air(temp, rh)
+    ab_hu_kg = absolutehumidity_kg_air(temp, rh)
     ab_hu_m3 = absolutehumidity_m3_air(temp, rh)
     en_kg = entalpie_kg_air(temp, rh)
     en_m3 = entalpie_m3_air(temp, rh)

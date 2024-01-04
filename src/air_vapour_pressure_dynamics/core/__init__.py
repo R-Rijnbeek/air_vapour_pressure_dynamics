@@ -78,6 +78,34 @@ def argumentChecker_1var(TEMP, function="density_air"):
     (TEMP,) = inputAdapter(TEMP)
     return MakeUpOutput(wrapper(TEMP),function)
 
+def controller(*args, function = "density_air"):
+    argument_lenght = len(args)
+    if (0 < argument_lenght < 3 ):
+
+        if SETTINGS.ARGUMENT_CHECK :
+
+            formats = [int, float]
+            if SETTINGS.NUMPY_DETECTED :
+                formats.append(numpyArray)
+            if SETTINGS.SYMPY_DETECTED :
+                formats.append(sympySymbol)
+            formats = tuple(tuple(formats) for i in range(argument_lenght))
+
+            @argument_check(*formats)
+            def wrapper(*arguments):
+                return _getFunctionByName(function)(*arguments)
+        else:
+            def wrapper(*arguments):
+                return _getFunctionByName(function)(*arguments)
+            
+        ARGS = inputAdapter(*args)
+        return MakeUpOutput(wrapper(*ARGS),function)
+
+    else:
+        raise AssertionError("number of argument must be 1 or 2")
+
+
+
 if __name__ == '__main__':
     
     pass
