@@ -6,4 +6,6 @@ dependencies:
   - python=3.10
   - pip
   - pip:
-    - air-vapour-pressure-dynamics==1.8.7
+    - numpy
+    - sympy
+    - air-vapour-pressure-dynamics==1.8.8
