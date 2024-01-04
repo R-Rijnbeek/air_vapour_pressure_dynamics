@@ -52,7 +52,7 @@ def _dew_point_temperature(temp: int | float, rh: int | float) -> float:
 
 # ======= CONFIGURATION DICT ===========
 
-functionList = {
+FUNCTION_CONFIG = {
     "vapourpressure": {
         "function":_vapourpressure, 
         "unit": "Pa"

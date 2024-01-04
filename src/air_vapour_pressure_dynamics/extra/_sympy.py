@@ -6,9 +6,11 @@ from basic_decorators import argument_check
 
 from ..initialize import SETTINGS, sp
 
+# ======= CONSTANTS ============
+
 sympySymbol = sp.Symbol
 
-# ======= FUNCTIONS ===========
+# ======= CLASSES ============
 
 if SETTINGS.SYMPY_DETECTED :
     class UnitSympyExpression(sp.UnevaluatedExpr):
@@ -31,6 +33,8 @@ class SympySimbol():
 class SympyExpression():
     """sympy Expression: sympy.Expr"""
     pass
+
+# ======= FUNCTIONS ===========
 
 def log_sympy(value):
     return sp.log(value)

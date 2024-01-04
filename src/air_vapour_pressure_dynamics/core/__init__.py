@@ -7,10 +7,10 @@ import inspect
 from basic_decorators import argument_check
 
 from ..initialize import SETTINGS
+from ..calculations import FUNCTION_CONFIG
 from ..extra._numpy import UnitNumpyArray, isNumpyValue, numpyArray, numpyFloat64
 from ..extra._sympy import UnitSympyExpression, isSympyExpr, sympySymbol
 from ..extra._float import UnitFloat
-from ..calculations import functionList
     
 # ======= FUNCTIONS ===========
 
@@ -28,10 +28,10 @@ def getFunctionBackName():
     return inspect.currentframe().f_back.f_code.co_name
 
 def _getFunctionByName(functionName):
-    return functionList[functionName]["function"]
+    return FUNCTION_CONFIG[functionName]["function"]
 
 def _getUnitsByName(functionName):
-    return functionList[functionName]["unit"]
+    return FUNCTION_CONFIG[functionName]["unit"]
 
 def MakeUpOutput(value, functionName):
     if SETTINGS.APPLY_UNITS :
