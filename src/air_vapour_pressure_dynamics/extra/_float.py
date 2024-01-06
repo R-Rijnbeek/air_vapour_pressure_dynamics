@@ -16,7 +16,8 @@ class UnitFloat(float):
     def __init__(self, value, unit=None):
         self.unit = unit
 
-def log_float(value):
+@argument_check((int,float))
+def log_float(value: int | float)-> float:
     return math.log(value)
 
 if __name__ == '__main__':

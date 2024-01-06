@@ -3,6 +3,7 @@
 # ======== IMPORTS ===========
 
 import inspect
+from types import FunctionType
 
 from basic_decorators import argument_check
 
@@ -21,16 +22,18 @@ def _inputChanger(arg):
         return arg.astype(numpyFloat64)
     return arg
 
-def _inputAdapter(*args):
+def _inputAdapter(*args) -> tuple:
     return tuple(_inputChanger(arg) for arg in args)
 
-def _getFunctionByName(functionName):
+@argument_check(str)
+def _getFunctionByName(functionName: str) -> FunctionType:
     return FUNCTION_CONFIG[functionName]["function"]
 
-def _getUnitsByName(functionName):
+@argument_check(str)
+def _getUnitsByName(functionName: str) -> str:
     return FUNCTION_CONFIG[functionName]["unit"]
 
-def _makeUpOutput(value, functionName):
+def _makeUpOutput(value , functionName: str) -> UnitFloat | UnitNumpyArray | UnitSympyExpression :
     if SETTINGS.APPLY_UNITS :
         if isinstance(value, float) :
             return UnitFloat(value, _getUnitsByName(functionName))
@@ -40,7 +43,7 @@ def _makeUpOutput(value, functionName):
             return UnitSympyExpression(value, _getUnitsByName(functionName))
     return value
 
-def _getFunctionBackName_X2():
+def _getFunctionBackName_X2() -> str:
     return inspect.currentframe().f_back.f_back.f_code.co_name
 
 def controller(*args):
