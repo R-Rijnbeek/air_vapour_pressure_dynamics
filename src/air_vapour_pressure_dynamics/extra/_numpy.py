@@ -34,10 +34,11 @@ class NumpyArray():
 
 # ======= FUNCTIONS ============
 
-def log_numpy(value):
+@argument_check(np.ndarray)
+def log_numpy(value: np.ndarray) -> np.ndarray:
     return np.log(value)
 
-def isNumpyValue(value):
+def isNumpyValue(value: object) -> bool:
     return SETTINGS.NUMPY_DETECTED and isinstance(value, np.ndarray)
 
 if __name__ == '__main__':

@@ -36,10 +36,11 @@ class SympyExpression():
 
 # ======= FUNCTIONS ===========
 
-def log_sympy(value):
+@argument_check(sp.Expr)
+def log_sympy(value: sp.Expr) -> sp.Expr :
     return sp.log(value)
 
-def isSympyExpr(value):
+def isSympyExpr(value: object) -> bool:
     return SETTINGS.SYMPY_DETECTED and isinstance(value, sp.Expr)
 
 if __name__ == '__main__':
