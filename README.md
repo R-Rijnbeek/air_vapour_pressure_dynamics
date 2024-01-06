@@ -9,30 +9,30 @@ Repository with the basic functions related with the temperature, relative humid
     pip install air_vapour_pressure_dynamics
     ````
 2. Once you get installed the package you can import the packahe in the python module by:
-    ````
+    ````python
     from air_vapour_pressure_dynamics import vapourpressure, absolutehumidity_kg_air,....
     ````
     or 
 
-    ````
+    ````python
     import air_vapour_pressure_dynamics
     ````
 
 ## Setters:
 
 1. put or remove argument validation::
-    ````
+    ````python
     setArgumentCheck(bool)
     ````
 2. Put or remove Units to results of validation::
-    ````
+    ````python
     setApplyUnits(bool)
     ````
 
 ## Examples:
 
 ### Basic Example::
-````
+````python
 from air_vapour_pressure_dynamics import absolutehumidity_kg_air
 temp = 25.5
 rh = 86.8
@@ -42,7 +42,7 @@ absolutehumidity_kg_air(temp, rh)
 ````
 
 ### Get units of calculation::
-```` 
+````python
 from air_vapour_pressure_dynamics import absolutehumidity_kg_air
 temp = 25.5
 rh = 86.8
