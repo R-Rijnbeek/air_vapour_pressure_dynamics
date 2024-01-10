@@ -34,8 +34,8 @@ class NumpyArray():
 
 # ======= FUNCTIONS ============
 
-@argument_check(np.ndarray)
-def log_numpy(value: np.ndarray) -> np.ndarray:
+@argument_check(numpyArray)
+def log_numpy(value: numpyArray) -> numpyArray:
     return np.log(value)
 
 def isNumpyValue(value: object) -> bool:

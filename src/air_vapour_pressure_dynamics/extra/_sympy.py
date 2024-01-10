@@ -9,6 +9,7 @@ from ..initialize import SETTINGS, sp
 # ======= CONSTANTS ============
 
 sympySymbol = sp.Symbol if SETTINGS.SYMPY_DETECTED else None
+sympyExpr = sp.Expr if SETTINGS.SYMPY_DETECTED else None
 
 # ======= CLASSES ============
 
@@ -36,8 +37,8 @@ class SympyExpression():
 
 # ======= FUNCTIONS ===========
 
-@argument_check(sp.Expr)
-def log_sympy(value: sp.Expr) -> sp.Expr :
+@argument_check(sympyExpr)
+def log_sympy(value: sympyExpr) -> sympyExpr :
     return sp.log(value)
 
 def isSympyExpr(value: object) -> bool:
