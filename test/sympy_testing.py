@@ -73,6 +73,30 @@ def sympyApplyUnits(temp, rh):
     else:
         print("sympyApplyUnits does not pass the test")
         return False
+    
+def sympyPartialDerivativeProcess(X, Y):
+    try:
+        setApplyUnits(False) # Because there is a bug that must be resolved
+
+        x = 1.5
+        delta_x = 0.2
+        y = 2.4
+        delta_y = -0.2
+
+        diff_method_by_X = sp.diff(absolutehumidity_kg_air(X,Y),X)
+        diff_method_by_Y = sp.diff(absolutehumidity_kg_air(X,Y),Y)
+
+        delta_Temp_contribution = sp.N(diff_method_by_X.subs([(X, x), (Y, y)]))
+        delta_RH_contribution = sp.N(diff_method_by_Y.subs([(X, x), (Y, y)]))
+
+        result = float(delta_Temp_contribution * delta_x + delta_RH_contribution * delta_y)
+
+        print(f"Sympy Partial Derivatives pass the test succesfully: {result}")
+
+        return True
+    except Exception as exc:
+        print(f"Unespected Error: {exc}")
+        return False
 
 
 def sympy_test_Process():
@@ -81,7 +105,8 @@ def sympy_test_Process():
             temp, rh = CreateTestData()
             test1 = sympyCalculations(temp, rh)
             test2 = sympyApplyUnits(temp, rh)
-            if test1 and test2:
+            test3 = sympyPartialDerivativeProcess(temp, rh)
+            if test1 and test2 and test3:
                 print("sympy test Process pass successfully!!" )
                 return True
             else:
